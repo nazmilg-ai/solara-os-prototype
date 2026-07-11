@@ -79,6 +79,7 @@ model ProductCategory {
   createdAt DateTime @default(now())
 
   fabrics       Fabric[]
+  colours       Colour[]
   bandMappings  FabricBandMapping[]
   priceRows     PriceListRow[]
   discountRates DiscountRate[]
@@ -95,23 +96,26 @@ model Fabric {
   name       String
   createdAt  DateTime        @default(now())
 
-  colours      Colour[]
   bandMappings FabricBandMapping[]
   quoteLines   QuoteLine[]
 
   @@unique([categoryId, name])
 }
 
+// Scoped to the category, not a specific fabric: the real colour data
+// (Colour_Master.csv) is organised as Category+Collection+ColourName with no
+// reliable link back to a single Fabric/Item Name row, and colour is
+// informational only per the brief anyway (doesn't affect price).
 model Colour {
-  id        String   @id @default(cuid())
-  fabric    Fabric   @relation(fields: [fabricId], references: [id], onDelete: Cascade)
-  fabricId  String
-  name      String
-  createdAt DateTime @default(now())
+  id         String          @id @default(cuid())
+  category   ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+  name       String
+  createdAt  DateTime        @default(now())
 
   quoteLines QuoteLine[]
 
-  @@unique([fabricId, name])
+  @@unique([categoryId, name])
 }
 
 // ---------------------------------------------------------------------------
@@ -122,26 +126,43 @@ model Colour {
 // group the same fabric into different bands (and Beverley only has mappings
 // for Vertical / Roller so far).
 //
+// `priceTableRef` (not `band`) is the actual join key into PriceListRow. It
+// mirrors the source spreadsheet's own "Price Table Reference" (PT_ID) column,
+// which we verified maps 1:1 to a single band — whereas the human-readable
+// `band` label can repeat (e.g. several genuinely different price tables are
+// all labelled just "Default") and would silently collapse real ambiguity if
+// used as the matching key. `band` is kept purely for display. For Beverley,
+// which has no price grid yet, priceTableRef is just set equal to the
+// Beverley band code as a placeholder join key for when real prices arrive.
+//
 // Deliberately NOT unique on (supplierId, fabricId): source CSVs sometimes
 // carry two conflicting rows for what looks like one fabric name (e.g. a
-// plain vs "with tapes" variant that wasn't distinguished in the sheet). The
-// app must surface that as an explicit "multiple matches" result rather than
-// silently picking one, so duplicates have to be importable.
+// plain vs "with tapes" variant that wasn't distinguished in the sheet, or
+// the same fabric name sourced from two different brands). The app must
+// surface that as an explicit "multiple matches" result rather than silently
+// picking one, so duplicates have to be importable.
 model FabricBandMapping {
-  id         String          @id @default(cuid())
-  supplier   Supplier        @relation(fields: [supplierId], references: [id], onDelete: Cascade)
-  supplierId String
-  category   ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
-  categoryId String
-  fabric     Fabric          @relation(fields: [fabricId], references: [id], onDelete: Cascade)
-  fabricId   String
-  band       String
-  createdAt  DateTime        @default(now())
+  id            String          @id @default(cuid())
+  supplier      Supplier        @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplierId    String
+  category      ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId    String
+  fabric        Fabric          @relation(fields: [fabricId], references: [id], onDelete: Cascade)
+  fabricId      String
+  band          String
+  priceTableRef String
+  // Extra sourcing context shown alongside "multiple matches" so an advisor
+  // has a chance to disambiguate (Collection for Decora, Fabric Brand for
+  // Beverley).
+  notes         String?
+  createdAt     DateTime        @default(now())
 
   @@index([supplierId, categoryId, fabricId])
 }
 
-// Category + Band + Width range + Drop range -> supplier list price ex VAT.
+// Category + PriceTableRef + Width range + Drop range -> supplier list price
+// ex VAT. `band` is kept as a display label alongside the authoritative
+// `priceTableRef` join key (see FabricBandMapping for why).
 model PriceListRow {
   id             String          @id @default(cuid())
   supplier       Supplier        @relation(fields: [supplierId], references: [id], onDelete: Cascade)
@@ -149,6 +170,7 @@ model PriceListRow {
   category       ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
   categoryId     String
   band           String
+  priceTableRef  String
   widthFromMm    Int
   widthToMm      Int
   dropFromMm     Int
@@ -156,7 +178,7 @@ model PriceListRow {
   listPriceExVat Decimal         @db.Decimal(10, 2)
   createdAt      DateTime        @default(now())
 
-  @@index([supplierId, categoryId, band])
+  @@index([supplierId, categoryId, priceTableRef])
 }
 
 // Discount % applied on top of list price. Only meaningful for
@@ -213,23 +235,28 @@ model AppSetting {
 // Customers
 // ---------------------------------------------------------------------------
 
+// Field set matches Customer_Master.csv (the real customer intake sheet)
+// exactly: Door No + Address Line 1/2 (not a single free-text address), a
+// separate County, and Telephone vs Mobile as distinct numbers.
 model Customer {
-  id             String   @id @default(cuid())
-  accountNo      String   @unique
-  brand          Brand
-  firstName      String
-  lastName       String
-  addressLine1   String?
-  addressLine2   String?
-  city           String?
-  postcode       String?
-  country        String?
-  phone          String?
-  email          String?
-  dateRegistered DateTime @default(now())
-  notes          String?
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  id              String   @id @default(cuid())
+  accountNo       String   @unique
+  brand           Brand
+  firstName       String
+  lastName        String
+  doorNo          String?
+  addressLine1    String?
+  addressLine2    String?
+  city            String?
+  county          String?
+  postcode        String?
+  telephoneNumber String?
+  mobileNumber    String?
+  email           String?
+  dateRegistered  DateTime @default(now())
+  notes           String?
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 
   quotes Quote[]
 }
@@ -268,8 +295,9 @@ model QuoteLine {
 
   // Resolved lookups, snapshotted at the time the line was added so a later
   // change to the price tables doesn't retroactively change a saved quote.
-  band   String
-  system String
+  band          String
+  priceTableRef String
+  system        String
 
   widthMm  Int
   dropMm   Int
