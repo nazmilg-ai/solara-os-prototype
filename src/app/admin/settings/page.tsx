@@ -2,6 +2,10 @@ import { prisma } from "@/lib/prisma";
 import { PricingMode } from "@prisma/client";
 import { SettingsForm } from "./SettingsForm";
 
+// Live business data — never statically cache, and don't require DB access
+// at build time (the build environment's DB may not be migrated yet).
+export const dynamic = "force-dynamic";
+
 export default async function SettingsPage() {
   const [vatSetting, premiumRate, negotiationRate] = await Promise.all([
     prisma.appSetting.findUnique({ where: { key: "vatPercent" } }),

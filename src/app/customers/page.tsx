@@ -2,6 +2,10 @@ import Link from "next/link";
 import { getCustomers } from "@/lib/queries";
 import { BRAND_LABELS } from "@/lib/brand";
 
+// Live business data — never statically cache, and don't require DB access
+// at build time (the build environment's DB may not be migrated yet).
+export const dynamic = "force-dynamic";
+
 export default async function CustomersPage() {
   const customers = await getCustomers();
 
@@ -24,7 +28,8 @@ export default async function CustomersPage() {
                 <th className="p-2">Account No</th>
                 <th className="p-2">Name</th>
                 <th className="p-2">Brand</th>
-                <th className="p-2">Phone</th>
+                <th className="p-2">Telephone</th>
+                <th className="p-2">Mobile</th>
                 <th className="p-2">Email</th>
                 <th className="p-2">Registered</th>
               </tr>
@@ -41,7 +46,8 @@ export default async function CustomersPage() {
                     {c.firstName} {c.lastName}
                   </td>
                   <td className="p-2">{BRAND_LABELS[c.brand]}</td>
-                  <td className="p-2">{c.phone ?? "—"}</td>
+                  <td className="p-2">{c.telephoneNumber ?? "—"}</td>
+                  <td className="p-2">{c.mobileNumber ?? "—"}</td>
                   <td className="p-2">{c.email ?? "—"}</td>
                   <td className="p-2">{c.dateRegistered.toLocaleDateString("en-GB")}</td>
                 </tr>

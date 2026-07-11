@@ -29,8 +29,8 @@ async function getSupplierByCode(code: string) {
 }
 
 // ---------------------------------------------------------------------------
-// Fabrics + Colours
-// columns: category, fabric, colour (optional)
+// Fabrics
+// columns: category, fabric
 // ---------------------------------------------------------------------------
 export async function importFabrics(rows: Record<string, string>[]): Promise<ImportSummary> {
   const summary = emptySummary();
@@ -39,7 +39,6 @@ export async function importFabrics(rows: Record<string, string>[]): Promise<Imp
     const rowNum = i + 2; // header is row 1
     const categoryName = row.category?.trim();
     const fabricName = row.fabric?.trim();
-    const colourName = row.colour?.trim();
 
     if (!categoryName || !fabricName) {
       summary.errors.push(`Row ${rowNum}: category and fabric are required.`);
@@ -49,20 +48,12 @@ export async function importFabrics(rows: Record<string, string>[]): Promise<Imp
 
     try {
       const category = await getOrCreateCategory(categoryName);
-      const fabric = await prisma.fabric.upsert({
+      await prisma.fabric.upsert({
         where: { categoryId_name: { categoryId: category.id, name: fabricName } },
         update: {},
         create: { categoryId: category.id, name: fabricName },
       });
       summary.created++;
-
-      if (colourName) {
-        await prisma.colour.upsert({
-          where: { fabricId_name: { fabricId: fabric.id, name: colourName } },
-          update: {},
-          create: { fabricId: fabric.id, name: colourName },
-        });
-      }
     } catch (e) {
       summary.errors.push(`Row ${rowNum}: ${(e as Error).message}`);
       summary.skipped++;
@@ -74,11 +65,47 @@ export async function importFabrics(rows: Record<string, string>[]): Promise<Imp
 }
 
 // ---------------------------------------------------------------------------
+// Colours — informational only, scoped to a category (not a specific
+// fabric — the real data has no reliable per-fabric colour link).
+// columns: category, colour
+// ---------------------------------------------------------------------------
+export async function importColours(rows: Record<string, string>[]): Promise<ImportSummary> {
+  const summary = emptySummary();
+
+  for (const [i, row] of rows.entries()) {
+    const rowNum = i + 2;
+    const categoryName = row.category?.trim();
+    const colourName = row.colour?.trim();
+
+    if (!categoryName || !colourName) {
+      summary.errors.push(`Row ${rowNum}: category and colour are required.`);
+      summary.skipped++;
+      continue;
+    }
+
+    const category = await getOrCreateCategory(categoryName);
+    await prisma.colour.upsert({
+      where: { categoryId_name: { categoryId: category.id, name: colourName } },
+      update: {},
+      create: { categoryId: category.id, name: colourName },
+    });
+    summary.created++;
+  }
+
+  revalidatePath("/admin/catalogue");
+  return summary;
+}
+
+// ---------------------------------------------------------------------------
 // Fabric -> Band mappings, per supplier
-// columns: supplierCode, category, fabric, band
-// Duplicates for the same fabric with a DIFFERENT band are allowed on
-// purpose (that's the real "multiple matches" scenario the app must
-// surface) — only an exact repeat of the same row is treated as a no-op.
+// columns: supplierCode, category, fabric, band, priceTableRef, notes
+//
+// priceTableRef (not band) is the actual join key into Price List Rows — use
+// the source price table's own reference/ID here, since the human-readable
+// band label can repeat across genuinely different price tables. Duplicates
+// for the same fabric with a DIFFERENT priceTableRef are allowed on purpose
+// (that's the real "multiple matches" scenario the app must surface) — only
+// an exact repeat of the same row is treated as a no-op.
 // ---------------------------------------------------------------------------
 export async function importBandMappings(rows: Record<string, string>[]): Promise<ImportSummary> {
   const summary = emptySummary();
@@ -89,6 +116,8 @@ export async function importBandMappings(rows: Record<string, string>[]): Promis
     const categoryName = row.category?.trim();
     const fabricName = row.fabric?.trim();
     const band = row.band?.trim();
+    const priceTableRef = row.priceTableRef?.trim() || band;
+    const notes = row.notes?.trim() || null;
 
     if (!supplierCode || !categoryName || !fabricName || !band) {
       summary.errors.push(`Row ${rowNum}: supplierCode, category, fabric and band are required.`);
@@ -120,7 +149,7 @@ export async function importBandMappings(rows: Record<string, string>[]): Promis
     }
 
     const existing = await prisma.fabricBandMapping.findFirst({
-      where: { supplierId: supplier.id, categoryId: category.id, fabricId: fabric.id, band },
+      where: { supplierId: supplier.id, categoryId: category.id, fabricId: fabric.id, priceTableRef },
     });
     if (existing) {
       summary.skipped++;
@@ -128,7 +157,7 @@ export async function importBandMappings(rows: Record<string, string>[]): Promis
     }
 
     await prisma.fabricBandMapping.create({
-      data: { supplierId: supplier.id, categoryId: category.id, fabricId: fabric.id, band },
+      data: { supplierId: supplier.id, categoryId: category.id, fabricId: fabric.id, band, priceTableRef, notes },
     });
     summary.created++;
   }
@@ -139,7 +168,8 @@ export async function importBandMappings(rows: Record<string, string>[]): Promis
 
 // ---------------------------------------------------------------------------
 // Price list rows, per supplier
-// columns: supplierCode, category, band, widthFrom, widthTo, dropFrom, dropTo, listPriceExVat
+// columns: supplierCode, category, band, priceTableRef, widthFrom, widthTo, dropFrom, dropTo, listPriceExVat
+// priceTableRef is the authoritative join key (see importBandMappings).
 // ---------------------------------------------------------------------------
 export async function importPriceListRows(rows: Record<string, string>[]): Promise<ImportSummary> {
   const summary = emptySummary();
@@ -149,6 +179,7 @@ export async function importPriceListRows(rows: Record<string, string>[]): Promi
     const supplierCode = row.supplierCode?.trim();
     const categoryName = row.category?.trim();
     const band = row.band?.trim();
+    const priceTableRef = row.priceTableRef?.trim() || band;
     const widthFrom = Number(row.widthFrom);
     const widthTo = Number(row.widthTo);
     const dropFrom = Number(row.dropFrom);
@@ -178,7 +209,7 @@ export async function importPriceListRows(rows: Record<string, string>[]): Promi
       where: {
         supplierId: supplier.id,
         categoryId: category.id,
-        band,
+        priceTableRef,
         widthFromMm: widthFrom,
         widthToMm: widthTo,
         dropFromMm: dropFrom,
@@ -196,6 +227,7 @@ export async function importPriceListRows(rows: Record<string, string>[]): Promi
         supplierId: supplier.id,
         categoryId: category.id,
         band,
+        priceTableRef,
         widthFromMm: widthFrom,
         widthToMm: widthTo,
         dropFromMm: dropFrom,

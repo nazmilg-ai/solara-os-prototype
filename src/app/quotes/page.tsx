@@ -2,6 +2,10 @@ import Link from "next/link";
 import { getQuotes } from "@/lib/queries";
 import { BRAND_LABELS } from "@/lib/brand";
 
+// Live business data — never statically cache, and don't require DB access
+// at build time (the build environment's DB may not be migrated yet).
+export const dynamic = "force-dynamic";
+
 function money(v: string | number) {
   const n = typeof v === "string" ? parseFloat(v) : v;
   return n.toLocaleString("en-GB", { style: "currency", currency: "GBP" });

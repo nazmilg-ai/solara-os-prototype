@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState, useTransition } from "react";
 import { useRouter } from "next/navigation";
 import { useBrand } from "@/lib/brand-context";
-import { fetchColours, fetchCustomers, fetchFabrics } from "./data-actions";
+import { fetchCategoriesForSupplier, fetchColours, fetchCustomers, fetchFabrics } from "./data-actions";
 import { previewQuoteLine, createQuote } from "@/app/quotes/actions";
 import type { RawLineInput, LineResolution, ResolvedLine } from "@/lib/quote-line-resolution";
 
@@ -50,10 +50,10 @@ function SizeCheckBadge({ status, note }: { status: string; note: string }) {
 
 export function QuoteBuilderClient({
   suppliers,
-  categories,
+  initialCategories,
 }: {
   suppliers: Supplier[];
-  categories: Category[];
+  initialCategories: Category[];
 }) {
   const router = useRouter();
   const { brand } = useBrand();
@@ -61,6 +61,7 @@ export function QuoteBuilderClient({
 
   // Line draft fields
   const [supplierId, setSupplierId] = useState(suppliers[0]?.id ?? "");
+  const [categories, setCategories] = useState<Category[]>(initialCategories);
   const [categoryId, setCategoryId] = useState("");
   const [fabricId, setFabricId] = useState("");
   const [colourId, setColourId] = useState("");
@@ -78,7 +79,7 @@ export function QuoteBuilderClient({
   const [lines, setLines] = useState<CartLine[]>([]);
   const [customers, setCustomers] = useState<{ id: string; accountNo: string; name: string }[]>([]);
   const [customerId, setCustomerId] = useState<string>("");
-  const [depositPercent, setDepositPercent] = useState("30");
+  const [depositPercent, setDepositPercent] = useState("50");
   const [notes, setNotes] = useState("");
   const [saveError, setSaveError] = useState<string | null>(null);
 
@@ -89,6 +90,17 @@ export function QuoteBuilderClient({
     // eslint-disable-next-line react-hooks/set-state-in-effect
     setCustomerId("");
   }, [brand]);
+
+  function handleSupplierChange(value: string) {
+    setSupplierId(value);
+    setCategoryId("");
+    setFabricId("");
+    setFabrics([]);
+    setColours([]);
+    setColourId("");
+    setPreview(null);
+    fetchCategoriesForSupplier(value).then(setCategories);
+  }
 
   function handleCategoryChange(value: string) {
     setCategoryId(value);
@@ -101,17 +113,14 @@ export function QuoteBuilderClient({
       return;
     }
     fetchFabrics(value).then(setFabrics);
+    // Colour is informational only and scoped to the category (not the
+    // specific fabric) — the real colour data has no reliable per-fabric link.
+    fetchColours(value).then(setColours);
   }
 
   function handleFabricChange(value: string) {
     setFabricId(value);
-    setColourId("");
     setPreview(null);
-    if (!value) {
-      setColours([]);
-      return;
-    }
-    fetchColours(value).then(setColours);
   }
 
   const currentSupplier = suppliers.find((s) => s.id === supplierId);
@@ -229,7 +238,7 @@ export function QuoteBuilderClient({
         <h2 className="font-medium">Add a line item</h2>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
           <Field label="Supplier">
-            <select className="input" value={supplierId} onChange={(e) => setSupplierId(e.target.value)}>
+            <select className="input" value={supplierId} onChange={(e) => handleSupplierChange(e.target.value)}>
               {suppliers.map((s) => (
                 <option key={s.id} value={s.id}>
                   {s.name}
@@ -266,9 +275,9 @@ export function QuoteBuilderClient({
             )}
           </Field>
           <Field label="Colour (optional)">
-            <select className="input" value={colourId} onChange={(e) => setColourId(e.target.value)} disabled={!fabricId}>
+            <select className="input" value={colourId} onChange={(e) => setColourId(e.target.value)} disabled={!categoryId}>
               <option value="">
-                {fabricId ? (colours.length ? "Select colour…" : "No colour data for this fabric") : "Select a fabric first"}
+                {categoryId ? (colours.length ? "Select colour…" : "No colour data for this category") : "Select a category first"}
               </option>
               {colours.map((c) => (
                 <option key={c.id} value={c.id}>

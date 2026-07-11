@@ -9,12 +9,14 @@ export interface CustomerInput {
   brand: Brand;
   firstName: string;
   lastName: string;
+  doorNo?: string;
   addressLine1?: string;
   addressLine2?: string;
   city?: string;
+  county?: string;
   postcode?: string;
-  country?: string;
-  phone?: string;
+  telephoneNumber?: string;
+  mobileNumber?: string;
   email?: string;
   dateRegistered?: string;
   notes?: string;
@@ -26,12 +28,14 @@ function clean(input: CustomerInput) {
     brand: input.brand,
     firstName: input.firstName.trim(),
     lastName: input.lastName.trim(),
+    doorNo: input.doorNo?.trim() || null,
     addressLine1: input.addressLine1?.trim() || null,
     addressLine2: input.addressLine2?.trim() || null,
     city: input.city?.trim() || null,
+    county: input.county?.trim() || null,
     postcode: input.postcode?.trim() || null,
-    country: input.country?.trim() || null,
-    phone: input.phone?.trim() || null,
+    telephoneNumber: input.telephoneNumber?.trim() || null,
+    mobileNumber: input.mobileNumber?.trim() || null,
     email: input.email?.trim() || null,
     dateRegistered: input.dateRegistered ? new Date(input.dateRegistered) : new Date(),
     notes: input.notes?.trim() || null,

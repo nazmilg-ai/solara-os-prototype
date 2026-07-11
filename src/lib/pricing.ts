@@ -9,9 +9,17 @@ export type LookupResult<T> =
 export interface BandMatch {
   mappingId: string;
   band: string;
+  priceTableRef: string;
 }
 
-/** Category + Fabric -> Band, scoped to one supplier. */
+/**
+ * Category + Fabric -> Band, scoped to one supplier.
+ *
+ * Ambiguity is judged on `priceTableRef`, not the human-readable `band`
+ * label: the source data shows the same label (e.g. "Default") can
+ * legitimately refer to different price tables, so matching on the label
+ * would silently collapse real ambiguity.
+ */
 export async function resolveBand(
   supplierId: string,
   categoryId: string,
@@ -22,24 +30,26 @@ export async function resolveBand(
   });
 
   if (rows.length === 0) return { status: "not_found" };
-  if (rows.length === 1) return { status: "found", value: { mappingId: rows[0].id, band: rows[0].band } };
 
-  // Distinct bands only — if duplicate rows happen to agree on the band,
-  // that's not a real ambiguity.
-  const distinctBands = new Map(rows.map((r) => [r.band, r]));
-  if (distinctBands.size === 1) {
+  const distinctRefs = new Map(rows.map((r) => [r.priceTableRef, r]));
+  if (distinctRefs.size === 1) {
     const row = rows[0];
-    return { status: "found", value: { mappingId: row.id, band: row.band } };
+    return { status: "found", value: { mappingId: row.id, band: row.band, priceTableRef: row.priceTableRef } };
   }
   return {
     status: "multiple",
-    candidates: [...distinctBands.values()].map((r) => ({ mappingId: r.id, band: r.band })),
+    candidates: [...distinctRefs.values()].map((r) => ({
+      mappingId: r.id,
+      band: r.band,
+      priceTableRef: r.priceTableRef,
+    })),
   };
 }
 
 export interface PriceMatch {
   priceRowId: string;
   band: string;
+  priceTableRef: string;
   listPriceExVat: Prisma.Decimal;
   widthFromMm: number;
   widthToMm: number;
@@ -47,11 +57,11 @@ export interface PriceMatch {
   dropToMm: number;
 }
 
-/** Category + Band + Width + Drop -> supplier list price ex VAT. */
+/** Category + PriceTableRef (band) + Width + Drop -> supplier list price ex VAT. */
 export async function resolvePrice(
   supplierId: string,
   categoryId: string,
-  band: string,
+  priceTableRef: string,
   widthMm: number,
   dropMm: number
 ): Promise<LookupResult<PriceMatch>> {
@@ -59,7 +69,7 @@ export async function resolvePrice(
     where: {
       supplierId,
       categoryId,
-      band,
+      priceTableRef,
       widthFromMm: { lte: widthMm },
       widthToMm: { gte: widthMm },
       dropFromMm: { lte: dropMm },
@@ -68,52 +78,25 @@ export async function resolvePrice(
   });
 
   if (rows.length === 0) return { status: "not_found" };
-  if (rows.length === 1) {
-    const r = rows[0];
-    return {
-      status: "found",
-      value: {
-        priceRowId: r.id,
-        band: r.band,
-        listPriceExVat: r.listPriceExVat,
-        widthFromMm: r.widthFromMm,
-        widthToMm: r.widthToMm,
-        dropFromMm: r.dropFromMm,
-        dropToMm: r.dropToMm,
-      },
-    };
-  }
+
+  const toMatch = (r: (typeof rows)[number]): PriceMatch => ({
+    priceRowId: r.id,
+    band: r.band,
+    priceTableRef: r.priceTableRef,
+    listPriceExVat: r.listPriceExVat,
+    widthFromMm: r.widthFromMm,
+    widthToMm: r.widthToMm,
+    dropFromMm: r.dropFromMm,
+    dropToMm: r.dropToMm,
+  });
 
   // Distinct prices only — overlapping rows that happen to agree aren't a
   // real ambiguity.
   const distinctPrices = new Map(rows.map((r) => [r.listPriceExVat.toString(), r]));
   if (distinctPrices.size === 1) {
-    const r = rows[0];
-    return {
-      status: "found",
-      value: {
-        priceRowId: r.id,
-        band: r.band,
-        listPriceExVat: r.listPriceExVat,
-        widthFromMm: r.widthFromMm,
-        widthToMm: r.widthToMm,
-        dropFromMm: r.dropFromMm,
-        dropToMm: r.dropToMm,
-      },
-    };
+    return { status: "found", value: toMatch(rows[0]) };
   }
-  return {
-    status: "multiple",
-    candidates: rows.map((r) => ({
-      priceRowId: r.id,
-      band: r.band,
-      listPriceExVat: r.listPriceExVat,
-      widthFromMm: r.widthFromMm,
-      widthToMm: r.widthToMm,
-      dropFromMm: r.dropFromMm,
-      dropToMm: r.dropToMm,
-    })),
-  };
+  return { status: "multiple", candidates: rows.map(toMatch) };
 }
 
 /**
