@@ -1,0 +1,44 @@
+"Max Size Master — mechanical width/drop limits sourced directly from Decora spec PDFs, per product and per operating system (manual vs motorised often differ - never assume they match). Blank/missing categories below are genuinely not sourced yet, not zero.",,,,,,,
+Product Category,System / Mechanism,Motorised?,Min Width (mm),Min Drop (mm),Max Width (mm),Max Drop (mm),Source File
+FB Softcell V-Series,V01 Freehanging Bottom Up,No,200,200,2900,3000,PDF: SPEC26
+FB Softcell V-Series,V02 Freehanging TDBU,No,200,200,2900,3000,PDF: SPEC26
+FB Softcell V-Series,V03 Freehanging BU Day/Night,No,200,200,2900,3000,PDF: SPEC26
+FB Softcell V-Series,V05 Freehanging BU Chain,No,500,200,2900,3000,PDF: SPEC26
+FB Softcell V-Series,V06 Freehanging TDBU Chain,No,600,200,2900,3000,PDF: SPEC26
+FB Softcell V-Series,V07 Motorised Bottom Up,Yes,550,200,2900,3000,PDF: SPEC26
+FB Softcell V-Series,V08 Tensioned TDBU (width <=1000),No,200,200,1500,2200,PDF: SPEC26
+FB Softcell V-Series,V08 Tensioned TDBU (width >1000),No,200,200,1000,1500,PDF: SPEC26
+Nuvo Romans,Roman System (manual),No,250,250,2600,2570,PDF: SPEC12
+Nuvo Romans,No Drill Roman,No,250,250,2600,2570,PDF: SPEC12
+Nuvo Romans,Cruze Cassette Roman,No,250,250,2600,2570,PDF: SPEC12
+Nuvo Romans,Motorised Roman (T&L25),Yes,550,250,2600,3000,PDF: SPEC12
+Nuvo Romans,Motorised Roman (Roll Up 28 RTS / Sonesse 30),Yes,650,250,2600,3000,PDF: SPEC12
+Nuvo Curtains,"Pencil Pleat 3""",No,600,300,5600,2570,PDF: SPEC12
+Nuvo Curtains,Pinch Pleat (Double),No,538,300,5600,2570,PDF: SPEC12
+Nuvo Curtains,Eyelet,No,800,300,6400,2570,PDF: SPEC12
+Nuvo Curtains,Wave,No,387,500,7000,2570,PDF: SPEC12
+FB Romans,Unishade System (manual),No,350,250,2600,4000,PDF: SPEC46
+FB Romans,Unishade Breakaway,No,400,300,2400,2500,PDF: SPEC46
+FB Romans,No Drill Roman,No,250,250,2600,3000,PDF: SPEC46
+FB Romans,Cruze Cassette Roman,No,250,250,2600,4000,PDF: SPEC46
+FB Romans,Motorised Roman (T&L25),Yes,550,250,2600,3000,PDF: SPEC46
+FB Romans,Motorised Roman (Roll Up 28 RTS / Sonesse 30),Yes,650,250,2600,3000,PDF: SPEC46
+FB Curtains - Pencil Pleat,"Pencil Pleat 3""/6""",No,600,300,5600,5000,PDF: SPEC46
+FB Curtains - Double Pinch,Double Pinch Pleat,No,538,300,5600,5000,PDF: SPEC46
+FB Curtains - Triple Pinch,Triple Pinch Pleat,No,538,300,4310,5000,PDF: SPEC46
+FB Curtains - Eyelet,Eyelet,No,800,300,6400,5000,PDF: SPEC46
+FB Wave Curtain,Wave,No,387,500,7000,5000,PDF: SPEC46
+Fauxwood,Manual (35mm/50mm),No,290,150,2600,3000,PDF: SPEC02 (widths >1400mm capped at 2400mm drop)
+Fauxwood,Motorised (T50 RTS),Yes,390,150,2600,3000,PDF: SPEC02
+Sunwood,Manual (35mm/50mm),No,290,150,2400,3000,PDF: SPEC01
+Sunwood,Motorised (Tilt & Lift 25 RTS),Yes,540,150,1800,2000,PDF: SPEC01
+Sunwood,Motorised (Tilt 50 RTS),Yes,450,150,2400,3000,PDF: SPEC01
+Sunwood,Motorised (Sonesse 40 RTS),Yes,700,150,2400,3000,PDF: SPEC01
+Starwood,Manual (35mm/50mm),No,290,150,2400,2500,PDF: SPEC03
+Starwood,Motorised (tilt only),Yes,390,150,2400,2500,"PDF: SPEC03 (max sizing is width-by-drop dependent, verify per order)"
+Known gaps (not yet sourced - see Notes / Improvements for detail),,,,,,,
+Roller (all brands/mounts),"No max width/drop sourced yet - the two 'Ebook' PDFs (Roller, Vertical) are too large (161-181MB) for the connector to read (100MB cap). Colour data for Roller IS covered (Panel Blind, Perfect Fit Roller, Cruze Vertical CSVs) but size limits are not.",,,,,,
+Vertical (all brands/mounts),"Same as Roller - colour data covered via Cruze Vertical CSV, but no max width/drop sourced yet.",,,,,,
+Timberlux / Perfect Fit Sunwood,"Colour data covered. Max width/drop not yet sourced for these two specifically (Fauxwood, Sunwood and Starwood now ARE covered, below).",,,,,,
+Perfect Fit Aluminium / Perfect Fit Roller / Perfect Fit Softshade,Colour data covered. Max width/drop not yet sourced.,,,,,,
+"Insect Screens, Skye Roof, Motorisation, Accessories, Cassettes",Not fabric/colour products (or colour not customer-facing in the same way) - out of scope for Colour Master. Not checked for max size either.,,,,,,

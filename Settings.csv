@@ -1,0 +1,116 @@
+,Settings — Pricing Engine Assumptions,,
+,Change values in the yellow cells only. All formulas throughout the workbook reference these cells.,,
+,Global Settings,,
+,VAT Rate,0.2,
+,Default Decora Discount %,0.55,
+,Premium Margin Multiplier,2.5,
+,Negotiation Margin Multiplier,2,
+,Deposit %,0.5,
+,Currency,GBP (£),
+,Rounding Rule (decimal places),2,
+,Product/Category-Specific Discount % Overrides (optional),,
+,Leave blank to use the Default Decora Discount % above. Add a row per category that has a different negotiated discount.,,
+,Product Category,Override Discount %,Notes
+,,0.05,MyDecora category: 'Prime Plisse Cellular'. No matching sheet in trade book - confirm which Decora range this is
+,Insect Screens,0.05,MyDecora category: 'Insect Screen Pleated Door (Old)'. Reasonable match
+,Insect Screens,0.05,MyDecora category: 'Insect Screen Roller - Door'. Reasonable match
+,Insect Screens,0.05,MyDecora category: 'Insect Screen Roller - Window'. Reasonable match
+,,0.05,MyDecora category: 'Prime Roller'. No matching sheet - 'Prime' roller branding not found in trade book
+,,0.05,MyDecora category: 'Prime Roller A'. No matching sheet - 'Prime' roller branding not found in trade book
+,,0.05,MyDecora category: 'Prime Roller Blind'. No matching sheet - 'Prime' roller branding not found in trade book
+,,0.05,MyDecora category: 'Prime Double Roller'. No matching sheet - 'Prime' roller branding not found in trade book
+,,0.05,MyDecora category: 'Prime Double Roller Blind'. No matching sheet - 'Prime' roller branding not found in trade book
+,,0.05,MyDecora category: 'Prime Fascia Roller'. No matching sheet - 'Prime' roller branding not found in trade book
+,,0.05,MyDecora category: 'Prime Perfect Fit Roller'. No matching sheet - 'Prime' roller branding not found in trade book
+,,0.05,MyDecora category: 'SOFTCELL'. Ambiguous - conflicts with 'FabricBox Softcell V-Series' at 35%. Likely a different/older SKU - confirm before mapping
+,,0.05,MyDecora category: '127mm Excel Vertical Slats Only'. 'Excel' vertical brand not found in trade book - confirm
+,,0.05,MyDecora category: 'Excel Cruze Vertical 127mm'. 'Excel' vertical brand not found in trade book - confirm
+,,0.05,MyDecora category: 'Excel Cruze Vertical Slats Only 127mm'. 'Excel' vertical brand not found in trade book - confirm
+,,0.05,MyDecora category: 'EXCEL ROLLER'. 'Excel' brand not found in trade book - confirm
+,,0.05,MyDecora category: 'Excel Cruze Vertical 89mm'. 'Excel' vertical brand not found in trade book - confirm
+,,0.05,MyDecora category: 'Excel Cruze Vertical Slats Only 89mm'. 'Excel' vertical brand not found in trade book - confirm
+,,0.05,MyDecora category: 'Excel Vertical'. 'Excel' vertical brand not found in trade book - confirm
+,,0.05,MyDecora category: 'Excel Vertical Slats Only'. 'Excel' vertical brand not found in trade book - confirm
+,,0.05,MyDecora category: 'Excel Vogue Vertical'. 'Excel' vertical brand not found in trade book - confirm
+,,0.05,MyDecora category: 'Excel Vogue Rigid PVC'. 'Excel' vertical brand not found in trade book - confirm
+,,0.05,MyDecora category: '127mm Excel Vertical'. 'Excel' vertical brand not found in trade book - confirm
+,FB Slats Only ,0.15,MyDecora category: '127mm Vertical Slats Only'. Reasonable match (or Contract Vertical - confirm)
+,FB Verticals,0.15,MyDecora category: '127mm Vertical'. Reasonable match (or Contract Vertical - confirm)
+,Contract Vertical,0.15,"MyDecora category: '89mm Cruze Vertical'. Cruze = vertical headrail brand - reasonable match, confirm width"
+,,0.05,MyDecora category: '127mm Cruze Headrail Only'. Component-only pricing (headrail without slats) - conflicts with full Contract Vertical rate (15%). Category-level engine can't split by component yet - confirm/handle manually
+,Contract Vertical,0.15,MyDecora category: '127mm Cruze Slats Only'. Reasonable match - confirm
+,Contract Vertical,0.15,MyDecora category: '127mm Cruze Vertical'. Reasonable match - confirm
+,NuVo Vertical,0.15,MyDecora category: '89mm Vertical H/Rail Only'. Reasonable match - confirm
+,NuVo Vertical Slats Only,0.15,MyDecora category: '89mm Vertical Slats Only'. Reasonable match - confirm
+,NuVo Vertical,0.15,MyDecora category: '89mm Vertical'. Reasonable match - confirm
+,FB Verticals,0.15,MyDecora category: '127mm Vertical H/Rail Only'. Reasonable match - confirm
+,,0.25,MyDecora category: '50mm Alumitex Venetian'. No 50mm Alumitex sheet found in trade book - confirm
+,,0.25,MyDecora category: '35mm Alumitex Venetian TAPES'. No 35mm Alumitex sheet found in trade book - confirm
+,,0.25,MyDecora category: '35mm Alumitex Venetian'. No 35mm Alumitex sheet found in trade book - confirm
+,Prime Alumitex,0.1,MyDecora category: '16mm Prime Alumitex'. Exact match - sheet contains '16mm Prime Alumitex' collection
+,25mm Alumitex,0.3,MyDecora category: '25mm Alumitex Woodline Venetian'. Reasonable match
+,25mm Alumitex,0.3,MyDecora category: '25mm Alumitex Venetian'. Exact match
+,,0.05,MyDecora category: '89mm Cruze Headrail Only'. Component-only pricing (headrail without slats) - conflicts with full Contract Vertical rate (15%). Category-level engine can't split by component yet - confirm/handle manually
+,Contract Vertical,0.15,MyDecora category: '89mm Cruze Slats Only'. Reasonable match - confirm
+,Timberlux Prime,0.25,MyDecora category: '50mm Timberlux'. Reasonable match - confirm width variant
+,Timberlux Prime,0.25,MyDecora category: '50mm Timberlux with Tapes'. Reasonable match - confirm width variant
+,Timberlux Prime,0.25,MyDecora category: '35mm Timberlux with Tapes'. Reasonable match - confirm width variant
+,Timberlux Prime,0.25,MyDecora category: '35mm Timberlux'. Reasonable match - confirm width variant
+,Timberlux Prime,0.25,MyDecora category: '25mm Timberlux'. Reasonable match - confirm width variant
+,Timberlux Prime,0.25,MyDecora category: '25mm Timberlux with Tapes'. Reasonable match - confirm width variant
+,,0.25,MyDecora category: '50mm Alumitex Venetian TAPES'. No 50mm Alumitex sheet found in trade book - confirm
+,Fauxwood,0.15,MyDecora category: '35mm Fauxwood TAPES'. Exact match
+,Fauxwood,0.15,MyDecora category: '35mm Fauxwood'. Exact match
+,Sunwood,0.15,MyDecora category: '50mm Sunwood TAPES'. Exact match
+,Sunwood,0.15,MyDecora category: '50mm Sunwood'. Exact match
+,Sunwood,0.15,MyDecora category: '35mm Sunwood TAPES'. Exact match
+,Sunwood,0.15,MyDecora category: '35mm Sunwood'. Exact match
+,Sunwood,0.15,MyDecora category: '25mm Sunwood TAPES'. Exact match
+,Sunwood,0.15,MyDecora category: '25mm Sunwood'. Exact match
+,Cassettes,0.1,MyDecora category: 'System 40'. Exact match - 'CASSETTE - SYSTEM 40' band in sheet
+,Cassettes,0.1,MyDecora category: 'System 55'. Exact match - 'CASSETTE - SYSTEM 55' band in sheet
+,Skye Roof,0.1,MyDecora category: 'Skye Roof Blind'. Exact match
+,FB Accessories,0.2,MyDecora category: 'Fascia Roller System'. Reasonable match - FB Accessories sheet has 40mm/70mm Cruze Fascia pricing
+,,0.2,MyDecora category: 'Double Roller Blind'. Ambiguous - which roller range? Confirm (FB/Nuvo/Contract Roller)
+,,0.2,MyDecora category: 'Roller'. Ambiguous generic name - confirm which roller range
+,Fauxwood,0.15,MyDecora category: '50mm Fauxwood TAPES'. Exact match
+,Fauxwood,0.15,MyDecora category: '50mm Fauxwood'. Exact match
+,Softshade Perfect Fit,0.35,MyDecora category: 'Perfect Fit SoftShade Prime Duo'. Reasonable match
+,Softshade Perfect Fit,0.35,MyDecora category: 'SoftShade Prime Duo Roller'. Reasonable match
+,Perfect Fit Roller,0.2,MyDecora category: 'Perfect Fit Roller'. Exact match
+,Perfect Fit Sunwood ,0.15,MyDecora category: 'Perfect Fit Sunwood'. Exact match
+,Perfect Fit Alumitex,0.3,MyDecora category: 'Perfect Fit Aluminium'. Reasonable match
+,Cassettes,0.1,MyDecora category: 'System 90 Motorised'. Reasonable match - confirm System 90 band exists in sheet
+,Cassettes,0.1,MyDecora category: 'System 90'. Reasonable match - confirm System 90 band exists in sheet
+,FB Curtains - Pencil Pleat,0.3,MyDecora category: 'FabricBox Curtains'. Applies to all FB Curtains heading styles - see notes
+,FB Romans,0.55,MyDecora category: 'FabricBox Romans- Motor'. Exact match
+,FB Romans,0.55,MyDecora category: 'FabricBox Romans- Manual'. Exact match
+,FB Softcell V-Series,0.35,MyDecora category: 'Cruze Pleated and Cellular'. Uncertain naming - confirm
+,FB Softcell V-Series,0.35,MyDecora category: 'FabricBox Softcell V-Series'. Exact match
+,,0.35,MyDecora category: 'FabricBox Softcell J-Series'. No J-Series sheet found in trade book - confirm
+,FB Accessories,0.2,MyDecora category: 'Cruze Fascia Roller'. Reasonable match - FB Accessories sheet has 40mm/70mm Cruze Fascia pricing
+,,0.15,MyDecora category: '35mm Starwood TAPES'. 'Starwood' brand not found anywhere in trade book - confirm (possibly newer range)
+,,0.15,MyDecora category: '35mm Starwood'. 'Starwood' brand not found anywhere in trade book - confirm (possibly newer range)
+,,0.3,MyDecora category: '50mm Starwood Fauxwood Tapes'. 'Starwood' brand not found anywhere in trade book - confirm (possibly newer range)
+,,0.3,MyDecora category: '50mm Starwood Fauxwood'. 'Starwood' brand not found anywhere in trade book - confirm (possibly newer range)
+,Tie Backs & Cushion Covers,0.2,MyDecora category: 'FabricBox Cushion Covers'. Reasonable match
+,Tie Backs & Cushion Covers,0.2,MyDecora category: 'FabricBox Tieback'. Reasonable match
+,Tracks & Accessories,0.3,MyDecora category: 'FabricBox Curtains Track Only'. Reasonable match
+,Cruze Fascia Softshade,0.35,MyDecora category: 'Prime Softshade'. Uncertain naming - confirm which softshade range
+,Cruze Fascia Softshade,0.35,MyDecora category: 'Prime Cruze Fascia Softshade'. Uncertain naming - confirm which softshade range
+,Cruze Fascia Softshade,0.35,MyDecora category: 'Premier Softshade'. Uncertain naming - confirm which softshade range
+,Cruze Fascia Softshade,0.35,MyDecora category: 'Fascia Softshade'. Uncertain naming - confirm which softshade range
+,Cruze Fascia Softshade,0.35,MyDecora category: 'Cruze Fascia Softshade'. Exact match
+,,0.15,MyDecora category: '50mm Starwood TAPES'. 'Starwood' brand not found anywhere in trade book - confirm (possibly newer range)
+,,0.15,MyDecora category: '50mm Starwood'. 'Starwood' brand not found anywhere in trade book - confirm (possibly newer range)
+,Nuvo Curtains - Pencil Pleat,0.2,MyDecora category: 'Nuvo Curtains'. Applies to all Nuvo Curtains heading styles - see notes
+,Nuvo Romans,0.3,MyDecora category: 'Nuvo Romans- Motor'. Exact match
+,Nuvo Romans,0.3,MyDecora category: 'Nuvo Romans- Manual'. Exact match
+,Softshade Perfect Fit,0.35,MyDecora category: 'Perfect Fit Softshade'. Reasonable match
+,FB Curtains - Double Pinch,0.3,MyDecora category: 'FabricBox Curtains (Double Pinch)'. Same range as FabricBox Curtains - all heading styles share one fabric range
+,FB Curtains - Triple Pinch,0.3,MyDecora category: 'FabricBox Curtains (Triple Pinch)'. Same range as FabricBox Curtains - all heading styles share one fabric range
+,FB Curtains - Eyelet,0.3,MyDecora category: 'FabricBox Curtains (Eyelet)'. Same range as FabricBox Curtains - all heading styles share one fabric range
+,FB Wave Curtain,0.3,MyDecora category: 'FabricBox Curtains (Wave)'. Same range as FabricBox Curtains - all heading styles share one fabric range
+,Nuvo Curtains - Double Pinch,0.2,MyDecora category: 'Nuvo Curtains (Double Pinch)'. Same range as Nuvo Curtains - all heading styles share one fabric range
+,Nuvo Curtains - Eyelet,0.2,MyDecora category: 'Nuvo Curtains (Eyelet)'. Same range as Nuvo Curtains - all heading styles share one fabric range
+,Nuvo Curtains - Wave,0.2,MyDecora category: 'Nuvo Curtains (Wave)'. Same range as Nuvo Curtains - all heading styles share one fabric range

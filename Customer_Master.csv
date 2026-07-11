@@ -1,0 +1,3 @@
+,Customer Master — customer registration,,,,,,,,,,,,,
+,Register a customer here before quoting. Always add new customers in the next blank row — never insert rows in the middle or delete a customer's row (blank their details instead) since the Account Number is generated from row position.,,,,,,,,,,,,,
+,Customer Account Number,First Name,Last Name,Door No,Address Line 1,Address Line 2,City,County,Postcode,Telephone Number,Mobile Number,Email Address,Date Registered,Notes

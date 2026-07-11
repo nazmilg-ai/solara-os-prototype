@@ -1,0 +1,492 @@
+,Beverley Fabric Bands,,,,
+,"Beverley Blinds' own band assignment per fabric, for Vertical and Roller blinds - sourced directly from their Feb 2026 price list. IMPORTANT: Beverley has NO trade discount at all (confirmed) - list price = Solara cost. Where a fabric brand here (Decora, Eclipse, Louvolite, Lifestyle) is also stocked directly from Decora, compare bands/prices before ordering - the same fabric can sit in a different band (and therefore a different price) at each supplier. Beverley's actual £ price grids are not yet in this workbook - see Notes / Improvements. This tab currently only tells you the BAND, not the price.",,,,
+,Blind Type,Fabric Brand,Fabric Name,Beverley Band,Roll Width (mm)
+,Roller,Decora,Aki,E,280
+,Roller,Decora,Akita,C,200
+,Roller,Decora,Akita BO,D,200
+,Roller,Decora,Alara,E,240
+,Roller,Decora,Altea,C,200
+,Roller,Decora,Alvor,D,200
+,Roller,Decora,Amaris,AA,200
+,Roller,Decora,Amico,C,240
+,Roller,Decora,Arona,C,240
+,Roller,Decora,Astro,D,200
+,Roller,Decora,Barclay,B,300
+,Roller,Decora,Bella,B,200
+,Roller,Decora,Bexley,C,200
+,Roller,Decora,Boheme,B,183
+,Roller,Decora,Boho,C,200
+,Roller,Decora,Calista,D,200
+,Roller,Decora,Cleo,AA,200
+,Roller,Decora,Como,A,200
+,Roller,Decora,Devon,C,200
+,Roller,Decora,Dino,D,200
+,Roller,Decora,Diva,B,183
+,Roller,Decora,Dollie,D,200
+,Roller,Decora,Ducato,E,300
+,Roller,Decora,Ella,C,200
+,Roller,Decora,Ennis,C,200
+,Roller,Decora,Fiesta,AA,200
+,Roller,Decora,Flock,C,200
+,Roller,Decora,Glimpse,C,300
+,Roller,Decora,Halo,A,200
+,Roller,Decora,Hanson,C,200
+,Roller,Decora,Hayden,B,300
+,Roller,Decora,Henlow,C,200
+,Roller,Decora,Isla,A,240
+,Roller,Decora,Java,AA,200
+,Roller,Decora,Kashi,C,183
+,Roller,Decora,Kelso,C,200
+,Roller,Decora,Kelso BO,D,200
+,Roller,Decora,Kira,AA,200
+,Roller,Decora,Kona,C,200
+,Roller,Decora,Lacuna,C,200
+,Roller,Decora,Leighton,C,300
+,Roller,Decora,Lennox,C,300
+,Roller,Decora,Liberte,C,200
+,Roller,Decora,Lissa,C,183
+,Roller,Decora,Lottie,C,200
+,Roller,Decora,Luxari,B,183
+,Roller,Decora,Malimo,AA,200
+,Roller,Decora,Mallory,C,200
+,Roller,Decora,Marlow,C,200
+,Roller,Decora,Memento,C,200
+,Roller,Decora,Memento BO,D,200
+,Roller,Decora,Messina,C,200
+,Roller,Decora,Metz,B,183
+,Roller,Decora,Miro,C,200
+,Roller,Decora,Miro BO,D,200
+,Roller,Decora,Monarch,AA,200
+,Roller,Decora,Mood,A,200
+,Roller,Decora,Moxie,C,200
+,Roller,Decora,Myth,C,200
+,Roller,Decora,Odin,E,200
+,Roller,Decora,Opus,AA,200
+,Roller,Decora,Orissa,C,200
+,Roller,Decora,Plaza,B,183
+,Roller,Decora,Puriti,C,200
+,Roller,Decora,Renzo,C,200
+,Roller,Decora,Rocha,C,300
+,Roller,Decora,Sabina,E,200
+,Roller,Decora,Sahara,B,183
+,Roller,Decora,Samba,B,183
+,Roller,Decora,Sasha,B,200
+,Roller,Decora,Savannah,B,200
+,Roller,Decora,Scope,AA,200
+,Roller,Decora,Sento,C,300
+,Roller,Decora,Sephora,C,200
+,Roller,Decora,Sephora BO,D,200
+,Roller,Decora,Serena,B,200
+,Roller,Decora,Serra,C,200
+,Roller,Decora,Sio,C,200
+,Roller,Decora,Sirocco,B,183
+,Roller,Decora,Sisi,C,200
+,Roller,Decora,Solice,C,200
+,Roller,Decora,Soma,C,300
+,Roller,Decora,Sora,C,183
+,Roller,Decora,Splash,AA,200
+,Roller,Decora,Staten,B,183
+,Roller,Decora,Tallulah,C,200
+,Roller,Decora,Tallulah BO,D,200
+,Roller,Decora,Tansy,C,200
+,Roller,Decora,Treviso,C,200
+,Roller,Decora,Tropic,C,200
+,Roller,Decora,UniColour,A,200
+,Roller,Decora,UniShade,B,200
+,Roller,Decora,Unilux,A,183
+,Roller,Decora,Uniview,C,300
+,Roller,Decora,Verona,AA,200
+,Roller,Decora,Vivi,D,200
+,Roller,Decora,Zafira,C,200
+,Roller,Decora,Zara,AA,200
+,Roller,Eclipse,Ada,B,200
+,Roller,Eclipse,Algarve,D,200
+,Roller,Eclipse,Alta,C,200
+,Roller,Eclipse,Alta Blackout,E,200
+,Roller,Eclipse,Aspen,C,200
+,Roller,Eclipse,Atlantex,B,200
+,Roller,Eclipse,Autumn,E,200
+,Roller,Eclipse,Aveline,C,200
+,Roller,Eclipse,Axel,E,200
+,Roller,Eclipse,Bamboo,A,200
+,Roller,Eclipse,Banlight Duo FR,B,200
+,Roller,Eclipse,Bonsai,C,210
+,Roller,Eclipse,Boston FR,E,180
+,Roller,Eclipse,Burst,E,200
+,Roller,Eclipse,Cadence,A,200
+,Roller,Eclipse,Carter,E,200
+,Roller,Eclipse,Caspian,B,200
+,Roller,Eclipse,Charm,B,200
+,Roller,Eclipse,Charm Blackout,E,200
+,Roller,Eclipse,Chester,E,200
+,Roller,Eclipse,Corsica,B,200
+,Roller,Eclipse,Courtney,C,200
+,Roller,Eclipse,Cubik,B,200
+,Roller,Eclipse,Elegance,E,240
+,Roller,Eclipse,Elliot,E,200
+,Roller,Eclipse,Elsie,E,200
+,Roller,Eclipse,Evita,A,200
+,Roller,Eclipse,Felix asc,E,200
+,Roller,Eclipse,Florence,A,200
+,Roller,Eclipse,Glitz,C,200
+,Roller,Eclipse,Impasto,E,200
+,Roller,Eclipse,Jax,E,200
+,Roller,Eclipse,Jude,A,200
+,Roller,Eclipse,Kaeda,E,200
+,Roller,Eclipse,Kaila,C,200
+,Roller,Eclipse,Kendall,C,200
+,Roller,Eclipse,Kylen,C,200
+,Roller,Eclipse,Lagan asc,C,200
+,Roller,Eclipse,Layla,D,200
+,Roller,Eclipse,Linenweave,B,200
+,Roller,Eclipse,Livia asc,C,200
+,Roller,Eclipse,Maeve,C,200
+,Roller,Eclipse,Marea,A,200
+,Roller,Eclipse,Mariella,C,200
+,Roller,Eclipse,Miya,B,200
+,Roller,Eclipse,Molina,C,200
+,Roller,Eclipse,Monte,C,200
+,Roller,Eclipse,Monte Blackout,E,200
+,Roller,Eclipse,Nordic asc,C,195
+,Roller,Eclipse,Oakley,B,200
+,Roller,Eclipse,Odessa,B,200
+,Roller,Eclipse,Palette FR,B,200
+,Roller,Eclipse,Panier asc,C,200
+,Roller,Eclipse,Paradox,E,200
+,Roller,Eclipse,Paris,E,200
+,Roller,Eclipse,Perrie,B,200
+,Roller,Eclipse,Peyton,C,200
+,Roller,Eclipse,Piper,C,250
+,Roller,Eclipse,Pitch,E,200
+,Roller,Eclipse,Polaris,A,200
+,Roller,Eclipse,Polaris Blackout,B,200
+,Roller,Eclipse,Radiance asc,D,200
+,Roller,Eclipse,Reflection FR,E,180
+,Roller,Eclipse,Ribbons asc,D,200
+,Roller,Eclipse,Ronda,E,200
+,Roller,Eclipse,Ronnie,E,200
+,Roller,Eclipse,Rupert,E,200
+,Roller,Eclipse,Shantung,B,200
+,Roller,Eclipse,Shona,E,250
+,Roller,Eclipse,Stella FR,E,180
+,Roller,Eclipse,Strata asc,D,200
+,Roller,Eclipse,Stratford,A,199
+,Roller,Eclipse,Tennessee,D,245
+,Roller,Eclipse,Tessa Blackout,E,200
+,Roller,Eclipse,Topaz,C,200
+,Roller,Eclipse,Urban FR,B,180
+,Roller,Eclipse,Vault,E,240
+,Roller,Eclipse,Vera,D,200
+,Roller,Eclipse,Wave,C,200
+,Roller,Eclipse,Whisper Screen 3%,E,250
+,Roller,Eclipse,Willow,C,200
+,Roller,Eclipse,Zayn,E,240
+,Roller,Eclipse,Zenith,E,200
+,Roller,Lifestyle,Classic BO,AA,200
+,Roller,Lifestyle,Classic Daylight,AAA,200
+,Roller,Lifestyle,Patterned PVC,B,183
+,Roller,Lifestyle,Plain PVC,A,183
+,Roller,Lifestyle,Signature,AAA,200
+,Roller,Lifestyle,Signature BO,A,200
+,Roller,Lifestyle,Signature FR,AA,300
+,Roller,Lifestyle,Signature FR BO,B,300
+,Roller,Louvolite,Acacia BO,C,200
+,Roller,Louvolite,Argent BO,E (+50% surcharge),205
+,Roller,Louvolite,Bahama,C,210
+,Roller,Louvolite,Bamboo,C,200
+,Roller,Louvolite,Birdsong,D,205
+,Roller,Louvolite,Boleyn BO,C,200
+,Roller,Louvolite,Bora,A,200
+,Roller,Louvolite,Carnival BO 200cm,D,200
+,Roller,Louvolite,Carnival LF 200cm,B,200
+,Roller,Louvolite,Carnival LF 250cm,B,250
+,Roller,Louvolite,Chatsworth,C,215
+,Roller,Louvolite,Collina BO,E (+50% surcharge),205
+,Roller,Louvolite,Como,D,205
+,Roller,Louvolite,Como Bella BO,E (+50% surcharge),200
+,Roller,Louvolite,Cotton Flower,D,205
+,Roller,Louvolite,Crush BO,E (+50% surcharge),205
+,Roller,Louvolite,Dapple SPC+,C,200
+,Roller,Louvolite,Daybreak 200cm,B,200
+,Roller,Louvolite,Daybreak 250cm,B,250
+,Roller,Louvolite,Daybreak 300cm,B,300
+,Roller,Louvolite,Ex-lite BO 183cm,C,183
+,Roller,Louvolite,Fiji,C,200
+,Roller,Louvolite,Flores,D,205
+,Roller,Louvolite,Guardian,B,200
+,Roller,Louvolite,Haven,C,200
+,Roller,Louvolite,Haven BO,E,200
+,Roller,Louvolite,Java,B,210
+,Roller,Louvolite,Kona,A,205
+,Roller,Louvolite,Lily,D,205
+,Roller,Louvolite,Mistral,A,200
+,Roller,Louvolite,Monet,D,205
+,Roller,Louvolite,Nordic BO,E,205
+,Roller,Louvolite,Oslo,E,300
+,Roller,Louvolite,Oxford BO,D,200
+,Roller,Louvolite,Oxford LF,B,205
+,Roller,Louvolite,Perspective 1/3/5% (various),C,200
+,Roller,Louvolite,Perspective Pureview 200cm,D,200
+,Roller,Louvolite,Petal (Sheer),D,200
+,Roller,Louvolite,Pop BO,B,200
+,Roller,Louvolite,Pop LF,A,200
+,Roller,Louvolite,Ribble LF,B,200
+,Roller,Louvolite,Ritz,C,205
+,Roller,Louvolite,River,B,205
+,Roller,Louvolite,Sirocco,A,205
+,Roller,Louvolite,Swedish Birch,D,205
+,Roller,Louvolite,Vermont,C,200
+,Roller,Louvolite,Voile,B,200
+,Roller,Louvolite,Voile (3m),B,300
+,Roller,Louvolite,Zen LF,C,200
+,Roller,Louvolite,Zephyr,A,200
+,Roller,Market Place,Ada,B,200
+,Roller,Market Place,Arundel,B,200
+,Roller,Market Place,Bamboo,A,200
+,Roller,Market Place,Cadence,AA,200
+,Roller,Market Place,Charm B/O,D,200
+,Roller,Market Place,Corsica,A,200
+,Roller,Market Place,Evita,A,200
+,Roller,Market Place,Florence,A,200
+,Roller,Market Place,Florentina,D,200
+,Roller,Market Place,Lacie,C,200
+,Roller,Market Place,Makira,C,200
+,Roller,Market Place,Marea,A,200
+,Roller,Market Place,Marica B/O,E,200
+,Roller,Market Place,Oakley,A,200
+,Roller,Market Place,Perrie,A,200
+,Roller,Market Place,Polaris,AA,200
+,Roller,Market Place,Polaris B/O,B,200
+,Roller,Market Place,Romain,C,200
+,Roller,Market Place,Shantung,A,200
+,Roller,Market Place,Sorrell,C,200
+,Roller,Market Place,Stratford,A,200
+,Roller,Market Place,Topaz,B,200
+,Roller,Market Place,Torin,C,200
+,Roller,Market Place,Urban,C,180
+,Roller,Market Place,Valetta,AA,300
+,Roller,Market Place,Valetta B/O,B,300
+,Roller,Market Place,Whisper 3%,C,250
+,Vertical,Decora,Alara,D,
+,Vertical,Decora,Alvor,D,
+,Vertical,Decora,Amaris,AAA,
+,Vertical,Decora,Aria,A,
+,Vertical,Decora,Arona,C,
+,Vertical,Decora,Barclay,B,
+,Vertical,Decora,Bella,B,
+,Vertical,Decora,Bexley,C,
+,Vertical,Decora,Cameo,AAA,
+,Vertical,Decora,Carlo,AAA,
+,Vertical,Decora,Cleo,AAA,
+,Vertical,Decora,Como,A,
+,Vertical,Decora,Dalia,AAA,
+,Vertical,Decora,Devon,C,
+,Vertical,Decora,Diva,B,
+,Vertical,Decora,Ennis,C,
+,Vertical,Decora,Fiesta,AAA,
+,Vertical,Decora,Fitz,A,
+,Vertical,Decora,Fleur,A,
+,Vertical,Decora,Glimpse,C,
+,Vertical,Decora,Hanson,D,
+,Vertical,Decora,Hayden,A,
+,Vertical,Decora,Hayworth,C,
+,Vertical,Decora,Henlow,C,
+,Vertical,Decora,Isla,B,
+,Vertical,Decora,Java,AAA,
+,Vertical,Decora,Kira,AAA,
+,Vertical,Decora,Kobe,C,
+,Vertical,Decora,Lana,AA,
+,Vertical,Decora,Legacy,A,
+,Vertical,Decora,Linden,C,
+,Vertical,Decora,Lucca,A,
+,Vertical,Decora,Luxari,B,
+,Vertical,Decora,Malimo,AA,
+,Vertical,Decora,Messina,C,
+,Vertical,Decora,Metz,B,
+,Vertical,Decora,Mia,AAA,
+,Vertical,Decora,Monarch,AAA,
+,Vertical,Decora,Mood,B,
+,Vertical,Decora,Myth,C,
+,Vertical,Decora,Odin,D,
+,Vertical,Decora,Opus,AAA,
+,Vertical,Decora,Orissa,D,
+,Vertical,Decora,Plaza,B,
+,Vertical,Decora,Renzo,C,
+,Vertical,Decora,Rocha,C,
+,Vertical,Decora,Rossini,AAA,
+,Vertical,Decora,Sahara,B,
+,Vertical,Decora,Samba,B,
+,Vertical,Decora,Scope,AA,
+,Vertical,Decora,Senna,AA,
+,Vertical,Decora,Sio,C,
+,Vertical,Decora,Sirocco,B,
+,Vertical,Decora,Sisi,C,
+,Vertical,Decora,Soma,C,
+,Vertical,Decora,Splash,AA,
+,Vertical,Decora,Staten,B,
+,Vertical,Decora,Tobin,B,
+,Vertical,Decora,UniColour,A,
+,Vertical,Decora,UniShade,C,
+,Vertical,Decora,Unilux,B,
+,Vertical,Decora,Uniview 3200,C,
+,Vertical,Decora,Verona,AAA,
+,Vertical,Decora,Vivi,D,
+,Vertical,Decora,Zara,AAA,
+,Vertical,Eclipse,Ada,A,
+,Vertical,Eclipse,Aspen,C,
+,Vertical,Eclipse,Astratto,AA,
+,Vertical,Eclipse,Atlantex,A,
+,Vertical,Eclipse,Atlantex asc,B,
+,Vertical,Eclipse,Aveline,C,
+,Vertical,Eclipse,Bamboo,AA,
+,Vertical,Eclipse,Banlight Duo FR,B,
+,Vertical,Eclipse,Bliss,B,
+,Vertical,Eclipse,Boston FR,B,
+,Vertical,Eclipse,Burst,D,
+,Vertical,Eclipse,Carter,D,
+,Vertical,Eclipse,Caspian,AA,
+,Vertical,Eclipse,Corsica,AA,
+,Vertical,Eclipse,Elegance,E,
+,Vertical,Eclipse,Evita,AA,
+,Vertical,Eclipse,Felix asc,D,
+,Vertical,Eclipse,Fleur,AA,
+,Vertical,Eclipse,Florence,AA,
+,Vertical,Eclipse,Fuse,C,
+,Vertical,Eclipse,Glitz,C,
+,Vertical,Eclipse,Grayson,A,
+,Vertical,Eclipse,Impasto,D,
+,Vertical,Eclipse,Jude,AA,
+,Vertical,Eclipse,Lagan asc,C,
+,Vertical,Eclipse,Linenweave,B,
+,Vertical,Eclipse,Livia asc,C,
+,Vertical,Eclipse,Lotus,AA,
+,Vertical,Eclipse,Marea,AA,
+,Vertical,Eclipse,Miya,A,
+,Vertical,Eclipse,Nordic asc,C,
+,Vertical,Eclipse,Oakley,A,
+,Vertical,Eclipse,Odessa,A,
+,Vertical,Eclipse,Palette FR,A,
+,Vertical,Eclipse,Panache,C,
+,Vertical,Eclipse,Panier asc,C,
+,Vertical,Eclipse,Paris,C,
+,Vertical,Eclipse,Perrie,A,
+,Vertical,Eclipse,Piper,C,
+,Vertical,Eclipse,Polaris,AA,
+,Vertical,Eclipse,Polaris Blackout,A,
+,Vertical,Eclipse,Radiance asc,C,
+,Vertical,Eclipse,Reflection FR,B,
+,Vertical,Eclipse,Rhapsody,AA,
+,Vertical,Eclipse,Ribbons asc,C,
+,Vertical,Eclipse,Ronda,D,
+,Vertical,Eclipse,Shantung,A,
+,Vertical,Eclipse,Shona,D,
+,Vertical,Eclipse,Sian,A,
+,Vertical,Eclipse,Stella FR,B,
+,Vertical,Eclipse,Stratford,AA,
+,Vertical,Eclipse,Topaz,C,
+,Vertical,Eclipse,Urban FR,B,
+,Vertical,Lifestyle,Amberley,AAA,
+,Vertical,Lifestyle,Arial,A,
+,Vertical,Lifestyle,Atlas PVC,A,
+,Vertical,Lifestyle,Broadway,AA,
+,Vertical,Lifestyle,Broadwell,AAA,
+,Vertical,Lifestyle,Callisto,A,
+,Vertical,Lifestyle,Camden,AAA,
+,Vertical,Lifestyle,Chilson,AAA,
+,Vertical,Lifestyle,Classic BO,AA,
+,Vertical,Lifestyle,Classic Day Light,AAA,
+,Vertical,Lifestyle,Derwent,AA,
+,Vertical,Lifestyle,Europa,A,
+,Vertical,Lifestyle,Hornton,AAA,
+,Vertical,Lifestyle,Hydra,A,
+,Vertical,Lifestyle,Kineton,AAA,
+,Vertical,Lifestyle,Kingham,AAA,
+,Vertical,Lifestyle,Leafield,AAA,
+,Vertical,Lifestyle,Lucton Cotton,A,
+,Vertical,Lifestyle,Metis,A,
+,Vertical,Lifestyle,Morton,AA,
+,Vertical,Lifestyle,Orion,B,
+,Vertical,Lifestyle,Pebworth,AAA,
+,Vertical,Lifestyle,Rhea,A,
+,Vertical,Lifestyle,Rissington,AAA,
+,Vertical,Lifestyle,Saintbury,AAA,
+,Vertical,Lifestyle,Signature,AA,
+,Vertical,Lifestyle,Signature BO,A,
+,Vertical,Lifestyle,Signature FR,A,
+,Vertical,Lifestyle,Signature FR BO,B,
+,Vertical,Lifestyle,Sirius,B,
+,Vertical,Lifestyle,Somerton,AAA,
+,Vertical,Lifestyle,Somerton BO,A,
+,Vertical,Lifestyle,Stretton,AAA,
+,Vertical,Lifestyle,Taynton,AAA,
+,Vertical,Lifestyle,Triton,A,
+,Vertical,Lifestyle,Vega,B,
+,Vertical,Lifestyle,Wndrush,AAA,
+,Vertical,Louvolite,Argent BO,E (+50% surcharge),
+,Vertical,Louvolite,Bamboo,C,
+,Vertical,Louvolite,Bora,A,
+,Vertical,Louvolite,Carnival BO,D,
+,Vertical,Louvolite,Carnival LF,C,
+,Vertical,Louvolite,Chatsworth,C,
+,Vertical,Louvolite,Collina BO,E (+50% surcharge),
+,Vertical,Louvolite,Como,D,
+,Vertical,Louvolite,Como Bella BO,E,
+,Vertical,Louvolite,Cotton Flower,D,
+,Vertical,Louvolite,Crush BO,E (+50% surcharge),
+,Vertical,Louvolite,Dapple SPC+,D,
+,Vertical,Louvolite,Daybreak,B,
+,Vertical,Louvolite,Didsbury BO,E,
+,Vertical,Louvolite,Dune Linen,C,
+,Vertical,Louvolite,Ex-lite BO,D,
+,Vertical,Louvolite,Guardian,B,
+,Vertical,Louvolite,Hampton VB,E,
+,Vertical,Louvolite,Haven,C,
+,Vertical,Louvolite,Haven BO,E,
+,Vertical,Louvolite,Kona,A,
+,Vertical,Louvolite,Kumano BO,E,
+,Vertical,Louvolite,Marble BO,E,
+,Vertical,Louvolite,Matrix BO,E,
+,Vertical,Louvolite,Mistral,A,
+,Vertical,Louvolite,Nordic BO,E,
+,Vertical,Louvolite,Nordic LF,C,
+,Vertical,Louvolite,Oslo,E,
+,Vertical,Louvolite,Oxford BO,E,
+,Vertical,Louvolite,Oxford LF,C,
+,Vertical,Louvolite,Perspective 1%,C,
+,Vertical,Louvolite,Perspective 3%,C,
+,Vertical,Louvolite,Perspective 3% White Backed,C,
+,Vertical,Louvolite,Perspective 5%,B,
+,Vertical,Louvolite,Perspective Aluview,E,
+,Vertical,Louvolite,Perspective BO,D,
+,Vertical,Louvolite,Perspective Pureview,D,
+,Vertical,Louvolite,Petal,D,
+,Vertical,Louvolite,Petal BO,D,
+,Vertical,Louvolite,Pop BO,B,
+,Vertical,Louvolite,Pop LF,AA,
+,Vertical,Louvolite,Reverie BO,E,
+,Vertical,Louvolite,Ribble DO,D,
+,Vertical,Louvolite,Ribble LF,C,
+,Vertical,Louvolite,Ritz,C,
+,Vertical,Louvolite,Romany BO,E,
+,Vertical,Louvolite,Savanna DO,E,
+,Vertical,Louvolite,Shot Silk BO,E,
+,Vertical,Louvolite,Sirocco,A,
+,Vertical,Louvolite,Vermont,C,
+,Vertical,Louvolite,Voile,B,
+,Vertical,Louvolite,Windsor DO,E,
+,Vertical,Louvolite,Zephyr,A,
+,Vertical,Market Place,Ada,AA,
+,Vertical,Market Place,Astratto,AA,
+,Vertical,Market Place,Bamboo,AA,
+,Vertical,Market Place,Corsica,AA,
+,Vertical,Market Place,Evita,AA,
+,Vertical,Market Place,Florence,AA,
+,Vertical,Market Place,Marea,AA,
+,Vertical,Market Place,Oakley,AA,
+,Vertical,Market Place,Perrie,A,
+,Vertical,Market Place,Polaris,AA,
+,Vertical,Market Place,Polaris,A,
+,Vertical,Market Place,Shantung,A,
+,Vertical,Market Place,Stratford,AA,
+,Vertical,Market Place,Topaz,B,
+,Vertical,Market Place,Urban FR,B,
