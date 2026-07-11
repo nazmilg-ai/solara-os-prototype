@@ -40,7 +40,7 @@ export type ResolvedLine = {
 
 export type UnresolvedLine =
   | { ok: false; stage: "band"; issue: "not_found" }
-  | { ok: false; stage: "band"; issue: "multiple"; candidates: string[] }
+  | { ok: false; stage: "band"; issue: "multiple"; candidates: { band: string; priceTableRef: string }[] }
   | { ok: false; stage: "price"; issue: "not_found"; band: string }
   | {
       ok: false;
@@ -78,7 +78,7 @@ export async function resolveQuoteLine(input: RawLineInput): Promise<LineResolut
       ok: false,
       stage: "band",
       issue: "multiple",
-      candidates: bandResult.candidates.map((c) => c.band),
+      candidates: bandResult.candidates.map((c) => ({ band: c.band, priceTableRef: c.priceTableRef })),
     };
   }
   const { priceTableRef } = bandResult.value;

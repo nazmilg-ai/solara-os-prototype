@@ -1,4 +1,5 @@
 import { getActiveSuppliers, getCategoriesForSupplier } from "@/lib/queries";
+import { prisma } from "@/lib/prisma";
 import { QuoteBuilderClient } from "./QuoteBuilderClient";
 
 // Reads live pricing data — don't require DB access at build time (the
@@ -6,7 +7,10 @@ import { QuoteBuilderClient } from "./QuoteBuilderClient";
 export const dynamic = "force-dynamic";
 
 export default async function NewQuotePage() {
-  const suppliers = await getActiveSuppliers();
+  const [suppliers, depositSetting] = await Promise.all([
+    getActiveSuppliers(),
+    prisma.appSetting.findUnique({ where: { key: "defaultDepositPercent" } }),
+  ]);
   const firstSupplier = suppliers[0];
   const initialCategories = firstSupplier ? await getCategoriesForSupplier(firstSupplier.id) : [];
 
@@ -16,6 +20,7 @@ export default async function NewQuotePage() {
       <QuoteBuilderClient
         suppliers={suppliers.map((s) => ({ id: s.id, name: s.name, code: s.code, pricingType: s.pricingType }))}
         initialCategories={initialCategories.map((c) => ({ id: c.id, name: c.name }))}
+        defaultDepositPercent={depositSetting?.value ?? "50"}
       />
     </div>
   );
