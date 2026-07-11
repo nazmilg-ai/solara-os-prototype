@@ -73,6 +73,7 @@ export async function createQuote(input: CreateQuoteInput): Promise<
           fabricId: raw.fabricId,
           colourId: raw.colourId || null,
           band: line.band,
+          priceTableRef: line.priceTableRef,
           system: raw.system,
           widthMm: raw.widthMm,
           dropMm: raw.dropMm,

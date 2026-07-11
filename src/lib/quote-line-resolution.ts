@@ -25,6 +25,7 @@ export interface RawLineInput {
 export type ResolvedLine = {
   ok: true;
   band: string;
+  priceTableRef: string;
   listPriceExVat: string;
   discountPercent: string;
   discountSource: "category" | "default" | "none";
@@ -73,18 +74,31 @@ export async function resolveQuoteLine(input: RawLineInput): Promise<LineResolut
   const bandResult = await resolveBand(input.supplierId, input.categoryId, input.fabricId);
   if (bandResult.status === "not_found") return { ok: false, stage: "band", issue: "not_found" };
   if (bandResult.status === "multiple") {
-    return { ok: false, stage: "band", issue: "multiple", candidates: bandResult.candidates.map((c) => c.band) };
+    return {
+      ok: false,
+      stage: "band",
+      issue: "multiple",
+      candidates: bandResult.candidates.map((c) => c.band),
+    };
   }
-  const band = bandResult.value.band;
+  const { priceTableRef } = bandResult.value;
 
-  const priceResult = await resolvePrice(input.supplierId, input.categoryId, band, input.widthMm, input.dropMm);
-  if (priceResult.status === "not_found") return { ok: false, stage: "price", issue: "not_found", band };
+  const priceResult = await resolvePrice(
+    input.supplierId,
+    input.categoryId,
+    priceTableRef,
+    input.widthMm,
+    input.dropMm
+  );
+  if (priceResult.status === "not_found") {
+    return { ok: false, stage: "price", issue: "not_found", band: bandResult.value.band };
+  }
   if (priceResult.status === "multiple") {
     return {
       ok: false,
       stage: "price",
       issue: "multiple",
-      band,
+      band: bandResult.value.band,
       candidates: priceResult.candidates.map((c) => ({
         listPriceExVat: c.listPriceExVat.toString(),
         widthFromMm: c.widthFromMm,
@@ -95,6 +109,9 @@ export async function resolveQuoteLine(input: RawLineInput): Promise<LineResolut
     };
   }
   const listPriceExVat = priceResult.value.listPriceExVat;
+  // Use the price row's own band label for display — it's the row we're
+  // actually pricing from, so it's the most precise source of truth.
+  const band = priceResult.value.band;
 
   const isFixedPrice = supplier.pricingType === SupplierPricingType.FIXED_PRICE;
   const { discountPercent, source: discountSource } = isFixedPrice
@@ -120,6 +137,7 @@ export async function resolveQuoteLine(input: RawLineInput): Promise<LineResolut
   return {
     ok: true,
     band,
+    priceTableRef,
     listPriceExVat: listPriceExVat.toString(),
     discountPercent: discountPercent.toString(),
     discountSource,

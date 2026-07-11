@@ -17,8 +17,21 @@ export function getFabricsByCategory(categoryId: string) {
   return prisma.fabric.findMany({ where: { categoryId }, orderBy: { name: "asc" } });
 }
 
-export function getColoursByFabric(fabricId: string) {
-  return prisma.colour.findMany({ where: { fabricId }, orderBy: { name: "asc" } });
+export function getColoursByCategory(categoryId: string) {
+  return prisma.colour.findMany({ where: { categoryId }, orderBy: { name: "asc" } });
+}
+
+/** Categories that actually have band mappings for this supplier, so the
+ * picker doesn't show ~50 irrelevant Decora categories when Beverley (which
+ * only covers Roller/Vertical) is selected, or vice versa. Falls back to the
+ * full category list if a supplier has none configured yet. */
+export async function getCategoriesForSupplier(supplierId: string) {
+  const scoped = await prisma.productCategory.findMany({
+    where: { bandMappings: { some: { supplierId } } },
+    orderBy: { name: "asc" },
+  });
+  if (scoped.length > 0) return scoped;
+  return getCategories();
 }
 
 export function getCustomers(brand?: Brand) {

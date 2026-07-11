@@ -1,5 +1,9 @@
 import { prisma } from "@/lib/prisma";
 
+// Live business data — never statically cache, and don't require DB access
+// at build time (the build environment's DB may not be migrated yet).
+export const dynamic = "force-dynamic";
+
 export default async function CataloguePage() {
   const [suppliers, categories, discountRates, maxSizeRules] = await Promise.all([
     prisma.supplier.findMany({

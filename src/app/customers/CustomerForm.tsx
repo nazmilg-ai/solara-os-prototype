@@ -22,12 +22,14 @@ export function CustomerForm({
     brand: (initial?.brand as BrandValue) ?? "SOLARA_SHADES",
     firstName: initial?.firstName ?? "",
     lastName: initial?.lastName ?? "",
+    doorNo: initial?.doorNo ?? "",
     addressLine1: initial?.addressLine1 ?? "",
     addressLine2: initial?.addressLine2 ?? "",
     city: initial?.city ?? "",
+    county: initial?.county ?? "",
     postcode: initial?.postcode ?? "",
-    country: initial?.country ?? "",
-    phone: initial?.phone ?? "",
+    telephoneNumber: initial?.telephoneNumber ?? "",
+    mobileNumber: initial?.mobileNumber ?? "",
     email: initial?.email ?? "",
     dateRegistered: initial?.dateRegistered ?? new Date().toISOString().slice(0, 10),
     notes: initial?.notes ?? "",
@@ -73,6 +75,9 @@ export function CustomerForm({
         <Field label="Last Name">
           <input className="input" value={form.lastName} onChange={(e) => set("lastName", e.target.value)} required />
         </Field>
+        <Field label="Door No">
+          <input className="input" value={form.doorNo} onChange={(e) => set("doorNo", e.target.value)} />
+        </Field>
         <Field label="Address Line 1">
           <input className="input" value={form.addressLine1} onChange={(e) => set("addressLine1", e.target.value)} />
         </Field>
@@ -82,14 +87,17 @@ export function CustomerForm({
         <Field label="City">
           <input className="input" value={form.city} onChange={(e) => set("city", e.target.value)} />
         </Field>
+        <Field label="County">
+          <input className="input" value={form.county} onChange={(e) => set("county", e.target.value)} />
+        </Field>
         <Field label="Postcode">
           <input className="input" value={form.postcode} onChange={(e) => set("postcode", e.target.value)} />
         </Field>
-        <Field label="Country">
-          <input className="input" value={form.country} onChange={(e) => set("country", e.target.value)} />
+        <Field label="Telephone Number">
+          <input className="input" value={form.telephoneNumber} onChange={(e) => set("telephoneNumber", e.target.value)} />
         </Field>
-        <Field label="Phone">
-          <input className="input" value={form.phone} onChange={(e) => set("phone", e.target.value)} />
+        <Field label="Mobile Number">
+          <input className="input" value={form.mobileNumber} onChange={(e) => set("mobileNumber", e.target.value)} />
         </Field>
         <Field label="Email">
           <input className="input" type="email" value={form.email} onChange={(e) => set("email", e.target.value)} />

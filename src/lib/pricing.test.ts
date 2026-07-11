@@ -62,25 +62,28 @@ beforeAll(async () => {
 
   // Clean single band mapping for `fabric`.
   await prisma.fabricBandMapping.create({
-    data: { supplierId: decoraId, categoryId, fabricId, band: "B1" },
+    data: { supplierId: decoraId, categoryId, fabricId, band: "B1", priceTableRef: "PT-1" },
   });
 
-  // Two conflicting rows (plain vs "with tapes" style data issue) for the
-  // ambiguous fabric — must surface as "multiple".
+  // Two rows sharing the same display band label "Default" but pointing at
+  // different price tables — mirrors the real data (e.g. Sunwood "Pure"),
+  // where the label repeats but the priceTableRef genuinely differs. Must
+  // surface as "multiple": matching on the label alone would hide this.
   await prisma.fabricBandMapping.create({
-    data: { supplierId: decoraId, categoryId, fabricId: fabricAmbiguousId, band: "B1" },
+    data: { supplierId: decoraId, categoryId, fabricId: fabricAmbiguousId, band: "Default", priceTableRef: "PT-2" },
   });
   await prisma.fabricBandMapping.create({
-    data: { supplierId: decoraId, categoryId, fabricId: fabricAmbiguousId, band: "B2" },
+    data: { supplierId: decoraId, categoryId, fabricId: fabricAmbiguousId, band: "Default", priceTableRef: "PT-3" },
   });
 
-  // Price rows for band B1: one clean range, one deliberately overlapping
+  // Price rows for PT-1: one clean range, one deliberately overlapping
   // range with a different price to exercise the "multiple match" price path.
   await prisma.priceListRow.create({
     data: {
       supplierId: decoraId,
       categoryId,
       band: "B1",
+      priceTableRef: "PT-1",
       widthFromMm: 0,
       widthToMm: 1000,
       dropFromMm: 0,
@@ -93,6 +96,7 @@ beforeAll(async () => {
       supplierId: decoraId,
       categoryId,
       band: "B1",
+      priceTableRef: "PT-1",
       widthFromMm: 900,
       widthToMm: 1500,
       dropFromMm: 0,
@@ -138,29 +142,30 @@ describe("resolveBand", () => {
     if (result.status === "found") expect(result.value.band).toBe("B1");
   });
 
-  it("returns multiple when two variants map to different bands", async () => {
+  it("returns multiple when the same band label hides two different price tables", async () => {
     const result = await resolveBand(decoraId, categoryId, fabricAmbiguousId);
     expect(result.status).toBe("multiple");
     if (result.status === "multiple") {
-      expect(result.candidates.map((c) => c.band).sort()).toEqual(["B1", "B2"]);
+      expect(result.candidates.every((c) => c.band === "Default")).toBe(true);
+      expect(result.candidates.map((c) => c.priceTableRef).sort()).toEqual(["PT-2", "PT-3"]);
     }
   });
 });
 
 describe("resolvePrice", () => {
   it("returns not_found outside all ranges", async () => {
-    const result = await resolvePrice(decoraId, categoryId, "B1", 5000, 5000);
+    const result = await resolvePrice(decoraId, categoryId, "PT-1", 5000, 5000);
     expect(result.status).toBe("not_found");
   });
 
   it("returns found in the non-overlapping region", async () => {
-    const result = await resolvePrice(decoraId, categoryId, "B1", 500, 500);
+    const result = await resolvePrice(decoraId, categoryId, "PT-1", 500, 500);
     expect(result.status).toBe("found");
     if (result.status === "found") expect(result.value.listPriceExVat.toString()).toBe("100");
   });
 
   it("returns multiple in the overlapping region with conflicting prices", async () => {
-    const result = await resolvePrice(decoraId, categoryId, "B1", 950, 500);
+    const result = await resolvePrice(decoraId, categoryId, "PT-1", 950, 500);
     expect(result.status).toBe("multiple");
     if (result.status === "multiple") expect(result.candidates.length).toBe(2);
   });

@@ -1,6 +1,7 @@
 import { ImportSection } from "./ImportSection";
 import {
   importFabrics,
+  importColours,
   importBandMappings,
   importPriceListRows,
   importDiscountRates,
@@ -13,34 +14,42 @@ export default function ImportPage() {
       <div>
         <h1 className="text-2xl font-semibold tracking-tight">Import Pricing Data</h1>
         <p className="text-black/60 dark:text-white/60 mt-1 max-w-2xl">
-          Upload the real CSV exports here once ready. Import in this order: Fabrics &amp; Colours
-          first, then Band Mappings, Price Lists, Discount Rates and Max Size Rules. Supplier codes
-          are <code>DECORA</code> and <code>BEVERLEY</code>. Re-uploading the same file is safe —
+          Upload CSV exports here. Import in this order: Fabrics, then Colours, Band Mappings,
+          Price Lists, Discount Rates and Max Size Rules. Supplier codes are{" "}
+          <code>DECORA</code> and <code>BEVERLEY</code>. Re-uploading the same file is safe —
           exact duplicate rows are skipped.
         </p>
       </div>
 
       <ImportSection
-        title="Fabrics & Colours"
-        description="Category + Fabric/Item name (keep size suffixes like 'Bella (89/127mm)' as-is), with an optional colour. Categories are created automatically if new."
-        columns={["category", "fabric", "colour"]}
-        sampleRow={["FB Roller", "Bella (89/127mm)", "Slate Grey"]}
+        title="Fabrics"
+        description="Category + Fabric/Item name (keep size suffixes like 'Bella (89/127mm)' as-is). Categories are created automatically if new."
+        columns={["category", "fabric"]}
+        sampleRow={["FB Roller", "Bella (89/127mm)"]}
         action={importFabrics}
       />
 
       <ImportSection
+        title="Colours"
+        description="Informational only — colour never affects price. Scoped to a category (not a specific fabric), matching the real colour data's structure. Not every category will have colours, and that's expected."
+        columns={["category", "colour"]}
+        sampleRow={["Contract Vertical", "Noir"]}
+        action={importColours}
+      />
+
+      <ImportSection
         title="Fabric → Band Mappings"
-        description="Per supplier. If a fabric genuinely maps to two different bands in the source data, upload both rows — the quote builder will surface that as 'multiple matches' rather than guessing."
-        columns={["supplierCode", "category", "fabric", "band"]}
-        sampleRow={["DECORA", "FB Roller", "Bella (89/127mm)", "B12"]}
+        description="Per supplier. priceTableRef is the actual join key into Price List Rows (use the source price table's own reference/ID) — band is just a display label and can repeat across genuinely different price tables. If a fabric genuinely maps to two different price tables, upload both rows — the quote builder will surface that as 'multiple matches' rather than guessing."
+        columns={["supplierCode", "category", "fabric", "band", "priceTableRef", "notes"]}
+        sampleRow={["DECORA", "FB Roller", "Bella (89/127mm)", "PRICE RANGE C", "PT-00003", ""]}
         action={importBandMappings}
       />
 
       <ImportSection
         title="Price List Rows"
-        description="Category + Band + Width/Drop range → supplier list price ex VAT. Ranges may legitimately overlap in the source sheet; overlaps with differing prices surface as 'multiple matches'."
-        columns={["supplierCode", "category", "band", "widthFrom", "widthTo", "dropFrom", "dropTo", "listPriceExVat"]}
-        sampleRow={["DECORA", "FB Roller", "B12", "0", "1000", "0", "1000", "42.50"]}
+        description="Category + priceTableRef + Width/Drop range → supplier list price ex VAT. Ranges may legitimately overlap in the source sheet; overlaps with differing prices surface as 'multiple matches'. For flat per-item prices with no width/drop, use a wide sentinel range (e.g. 1–100000)."
+        columns={["supplierCode", "category", "band", "priceTableRef", "widthFrom", "widthTo", "dropFrom", "dropTo", "listPriceExVat"]}
+        sampleRow={["DECORA", "FB Roller", "PRICE RANGE C", "PT-00003", "1", "610", "1", "610", "33.21"]}
         action={importPriceListRows}
       />
 
@@ -54,9 +63,9 @@ export default function ImportPage() {
 
       <ImportSection
         title="Max Size Rules"
-        description="Per category + system/mechanism (e.g. Manual, Motorised). Categories with no rule uploaded will correctly show 'No size data — verify manually'."
+        description="Per category + system/mechanism. Categories with no rule uploaded will correctly show 'No size data — verify manually'."
         columns={["category", "system", "minWidth", "maxWidth", "minDrop", "maxDrop"]}
-        sampleRow={["FB Roller", "Motorised", "", "2400", "", "2500"]}
+        sampleRow={["Fauxwood", "Manual (35mm/50mm)", "290", "2600", "150", "3000"]}
         action={importMaxSizeRules}
       />
     </div>
