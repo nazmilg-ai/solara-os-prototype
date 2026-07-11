@@ -1,0 +1,292 @@
+// Solara Pricing Engine — data model
+// See PROJECT_BRIEF.md for the business rules this schema encodes.
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ---------------------------------------------------------------------------
+// Enums
+// ---------------------------------------------------------------------------
+
+enum Brand {
+  SOLARA_SHADES
+  BLINDS_KINGDOM
+}
+
+// How a supplier's cost is derived from their list price.
+//   NEGOTIATED_DISCOUNT — list price minus a negotiated discount % (Decora)
+//   FIXED_PRICE         — list price IS the cost, no discount at all (Beverley Blinds)
+//   PROFORMA            — future suppliers, pay-before-dispatch, not integrated yet
+enum SupplierPricingType {
+  NEGOTIATED_DISCOUNT
+  FIXED_PRICE
+  PROFORMA
+}
+
+enum PricingMode {
+  PREMIUM
+  NEGOTIATION
+}
+
+enum SizeCheckStatus {
+  OK
+  OUTSIDE_RANGE
+  NO_DATA
+}
+
+enum QuoteStatus {
+  DRAFT
+  SENT
+  ACCEPTED
+  DECLINED
+}
+
+// ---------------------------------------------------------------------------
+// Suppliers
+// ---------------------------------------------------------------------------
+
+model Supplier {
+  id          String              @id @default(cuid())
+  name        String              @unique
+  code        String              @unique
+  pricingType SupplierPricingType
+  // e.g. "Trade credit account" / "Invoice due by the 20th of the month following the invoice date"
+  creditTerms String?
+  // Proforma suppliers are modelled but not selectable in the Quote Builder yet.
+  active      Boolean             @default(true)
+  createdAt   DateTime            @default(now())
+  updatedAt   DateTime            @updatedAt
+
+  bandMappings  FabricBandMapping[]
+  priceRows     PriceListRow[]
+  discountRates DiscountRate[]
+  quoteLines    QuoteLine[]
+}
+
+// ---------------------------------------------------------------------------
+// Catalogue: categories, fabrics, colours
+// ---------------------------------------------------------------------------
+
+model ProductCategory {
+  id        String   @id @default(cuid())
+  name      String   @unique
+  createdAt DateTime @default(now())
+
+  fabrics       Fabric[]
+  bandMappings  FabricBandMapping[]
+  priceRows     PriceListRow[]
+  discountRates DiscountRate[]
+  maxSizeRules  MaxSizeRule[]
+  quoteLines    QuoteLine[]
+}
+
+model Fabric {
+  id         String          @id @default(cuid())
+  category   ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+  // Literal fabric/item name exactly as supplied, including any size suffix
+  // e.g. "Bella (89/127mm)" — never strip this.
+  name       String
+  createdAt  DateTime        @default(now())
+
+  colours      Colour[]
+  bandMappings FabricBandMapping[]
+  quoteLines   QuoteLine[]
+
+  @@unique([categoryId, name])
+}
+
+model Colour {
+  id        String   @id @default(cuid())
+  fabric    Fabric   @relation(fields: [fabricId], references: [id], onDelete: Cascade)
+  fabricId  String
+  name      String
+  createdAt DateTime @default(now())
+
+  quoteLines QuoteLine[]
+
+  @@unique([fabricId, name])
+}
+
+// ---------------------------------------------------------------------------
+// Pricing data (per supplier)
+// ---------------------------------------------------------------------------
+
+// Category + Fabric -> Band, scoped per supplier because different suppliers
+// group the same fabric into different bands (and Beverley only has mappings
+// for Vertical / Roller so far).
+//
+// Deliberately NOT unique on (supplierId, fabricId): source CSVs sometimes
+// carry two conflicting rows for what looks like one fabric name (e.g. a
+// plain vs "with tapes" variant that wasn't distinguished in the sheet). The
+// app must surface that as an explicit "multiple matches" result rather than
+// silently picking one, so duplicates have to be importable.
+model FabricBandMapping {
+  id         String          @id @default(cuid())
+  supplier   Supplier        @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplierId String
+  category   ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+  fabric     Fabric          @relation(fields: [fabricId], references: [id], onDelete: Cascade)
+  fabricId   String
+  band       String
+  createdAt  DateTime        @default(now())
+
+  @@index([supplierId, categoryId, fabricId])
+}
+
+// Category + Band + Width range + Drop range -> supplier list price ex VAT.
+model PriceListRow {
+  id             String          @id @default(cuid())
+  supplier       Supplier        @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplierId     String
+  category       ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId     String
+  band           String
+  widthFromMm    Int
+  widthToMm      Int
+  dropFromMm     Int
+  dropToMm       Int
+  listPriceExVat Decimal         @db.Decimal(10, 2)
+  createdAt      DateTime        @default(now())
+
+  @@index([supplierId, categoryId, band])
+}
+
+// Discount % applied on top of list price. Only meaningful for
+// NEGOTIATED_DISCOUNT suppliers — FIXED_PRICE suppliers never get a discount
+// row consulted, regardless of what's stored here.
+// categoryId = null marks the supplier's default fallback rate.
+model DiscountRate {
+  id              String           @id @default(cuid())
+  supplier        Supplier         @relation(fields: [supplierId], references: [id], onDelete: Cascade)
+  supplierId      String
+  category        ProductCategory? @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId      String?
+  discountPercent Decimal          @db.Decimal(5, 2)
+  isDefault       Boolean          @default(false)
+  createdAt       DateTime         @default(now())
+
+  @@unique([supplierId, categoryId])
+}
+
+// Max size limits per category + system/mechanism (e.g. Motorised vs Manual).
+// Absence of a row means "no size data" — most categories aren't covered yet.
+model MaxSizeRule {
+  id         String          @id @default(cuid())
+  category   ProductCategory @relation(fields: [categoryId], references: [id], onDelete: Cascade)
+  categoryId String
+  system     String
+  minWidthMm Int?
+  maxWidthMm Int
+  minDropMm  Int?
+  maxDropMm  Int
+  createdAt  DateTime        @default(now())
+
+  @@unique([categoryId, system])
+}
+
+// Global, admin-editable pricing settings (VAT rate, mode multipliers).
+// Multiplier values are placeholders until the business supplies real
+// margin figures — see the Admin > Settings screen.
+model PricingModeRate {
+  id         String      @id @default(cuid())
+  mode       PricingMode @unique
+  multiplier Decimal     @db.Decimal(6, 4)
+  updatedAt  DateTime    @updatedAt
+}
+
+model AppSetting {
+  id        String   @id @default(cuid())
+  key       String   @unique
+  value     String
+  updatedAt DateTime @updatedAt
+}
+
+// ---------------------------------------------------------------------------
+// Customers
+// ---------------------------------------------------------------------------
+
+model Customer {
+  id             String   @id @default(cuid())
+  accountNo      String   @unique
+  brand          Brand
+  firstName      String
+  lastName       String
+  addressLine1   String?
+  addressLine2   String?
+  city           String?
+  postcode       String?
+  country        String?
+  phone          String?
+  email          String?
+  dateRegistered DateTime @default(now())
+  notes          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  quotes Quote[]
+}
+
+// ---------------------------------------------------------------------------
+// Quotes
+// ---------------------------------------------------------------------------
+
+model Quote {
+  id             String      @id @default(cuid())
+  quoteNumber    String      @unique
+  brand          Brand
+  customer       Customer?   @relation(fields: [customerId], references: [id])
+  customerId     String?
+  status         QuoteStatus @default(DRAFT)
+  depositPercent Decimal     @db.Decimal(5, 2)
+  notes          String?
+  createdAt      DateTime    @default(now())
+  updatedAt      DateTime    @updatedAt
+
+  lines QuoteLine[]
+}
+
+model QuoteLine {
+  id         String          @id @default(cuid())
+  quote      Quote           @relation(fields: [quoteId], references: [id], onDelete: Cascade)
+  quoteId    String
+  supplier   Supplier        @relation(fields: [supplierId], references: [id])
+  supplierId String
+  category   ProductCategory @relation(fields: [categoryId], references: [id])
+  categoryId String
+  fabric     Fabric          @relation(fields: [fabricId], references: [id])
+  fabricId   String
+  colour     Colour?         @relation(fields: [colourId], references: [id])
+  colourId   String?
+
+  // Resolved lookups, snapshotted at the time the line was added so a later
+  // change to the price tables doesn't retroactively change a saved quote.
+  band   String
+  system String
+
+  widthMm  Int
+  dropMm   Int
+  quantity Int
+
+  pricingMode PricingMode
+
+  listPriceExVat  Decimal @db.Decimal(10, 2)
+  discountPercent Decimal @db.Decimal(5, 2)
+  solaraCostExVat Decimal @db.Decimal(10, 2)
+  vatPercent      Decimal @db.Decimal(5, 2)
+  modeMultiplier  Decimal @db.Decimal(6, 4)
+  unitPriceIncVat Decimal @db.Decimal(10, 2)
+  lineTotalIncVat Decimal @db.Decimal(10, 2)
+
+  sizeCheckStatus SizeCheckStatus
+  sizeCheckNote   String?
+
+  createdAt DateTime @default(now())
+}
