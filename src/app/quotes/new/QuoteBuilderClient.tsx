@@ -130,8 +130,10 @@ export function QuoteBuilderClient({
   const currentFabric = fabrics.find((f) => f.id === fabricId);
   const currentColour = colours.find((c) => c.id === colourId);
 
-  const canPreview =
-    supplierId && categoryId && fabricId && system.trim() && widthMm && dropMm && quantity;
+  // System/Mechanism is optional — it only feeds the size check, which
+  // already handles "no data" honestly when it's blank or unmatched. Most
+  // categories don't have max-size data yet anyway (see Max_Size_Master.csv).
+  const canPreview = supplierId && categoryId && fabricId && widthMm && dropMm && quantity;
 
   function runPreview() {
     setPreviewError(null);
@@ -288,10 +290,10 @@ export function QuoteBuilderClient({
               ))}
             </select>
           </Field>
-          <Field label="System / Mechanism">
+          <Field label="System / Mechanism (optional)">
             <input
               className="input"
-              placeholder="e.g. Manual, Motorised"
+              placeholder="e.g. Manual, Motorised — leave blank to skip the size check"
               value={system}
               onChange={(e) => setSystem(e.target.value)}
             />
