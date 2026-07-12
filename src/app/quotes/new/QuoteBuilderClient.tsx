@@ -51,9 +51,11 @@ function SizeCheckBadge({ status, note }: { status: string; note: string }) {
 export function QuoteBuilderClient({
   suppliers,
   initialCategories,
+  defaultDepositPercent,
 }: {
   suppliers: Supplier[];
   initialCategories: Category[];
+  defaultDepositPercent: string;
 }) {
   const router = useRouter();
   const { brand } = useBrand();
@@ -79,7 +81,7 @@ export function QuoteBuilderClient({
   const [lines, setLines] = useState<CartLine[]>([]);
   const [customers, setCustomers] = useState<{ id: string; accountNo: string; name: string }[]>([]);
   const [customerId, setCustomerId] = useState<string>("");
-  const [depositPercent, setDepositPercent] = useState("50");
+  const [depositPercent, setDepositPercent] = useState(defaultDepositPercent);
   const [notes, setNotes] = useState("");
   const [saveError, setSaveError] = useState<string | null>(null);
 
@@ -462,9 +464,8 @@ function PreviewPanel({ preview, onAdd }: { preview: LineResolution; onAdd: () =
     return <ErrorPanel text="Not found — no Category+Fabric band mapping for this supplier." />;
   }
   if (preview.stage === "band" && preview.issue === "multiple") {
-    return (
-      <ErrorPanel text={`Multiple matches — refine selection. Candidate bands: ${preview.candidates.join(", ")}`} />
-    );
+    const candidateList = preview.candidates.map((c) => `${c.band} (${c.priceTableRef})`).join(", ");
+    return <ErrorPanel text={`Multiple matches — refine selection. Candidates: ${candidateList}`} />;
   }
   if (preview.stage === "price" && preview.issue === "not_found") {
     return <ErrorPanel text={`Not found — band "${preview.band}" has no price row covering this width/drop.`} />;

@@ -8,6 +8,12 @@ generator client {
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  // Prisma Postgres's DATABASE_URL is the Accelerate-proxied connection
+  // (prisma+postgres://), which the migration engine can't use directly —
+  // it needs a raw Postgres connection. POSTGRES_URL is that direct
+  // connection; `prisma migrate deploy` automatically prefers directUrl
+  // when both are set, so no other configuration is needed.
+  directUrl = env("POSTGRES_URL")
 }
 
 // ---------------------------------------------------------------------------
