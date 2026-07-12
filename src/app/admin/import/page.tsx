@@ -1,4 +1,5 @@
 import { ImportSection } from "./ImportSection";
+import { RealDataImportButton } from "./RealDataImportButton";
 import {
   importFabrics,
   importColours,
@@ -7,6 +8,13 @@ import {
   importDiscountRates,
   importMaxSizeRules,
 } from "./actions";
+
+// The Full Data Refresh button can take a while for ~34k price rows — request
+// the maximum serverless function duration Vercel allows for this route.
+// (Hobby-tier hard caps may still apply regardless of this setting; if the
+// button times out, fall back to `npm run import:real` run directly against
+// the database instead.)
+export const maxDuration = 300;
 
 export default function ImportPage() {
   return (
@@ -20,6 +28,8 @@ export default function ImportPage() {
           exact duplicate rows are skipped.
         </p>
       </div>
+
+      <RealDataImportButton />
 
       <ImportSection
         title="Fabrics"
